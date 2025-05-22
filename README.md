@@ -1,36 +1,44 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+<div align="center">
+  <img src="./public/imagen_h_blanca.png" alt="Hypertrophic Logo" width="160" />
+</div>
 
-## Getting Started
+# Hypertrophic - Landing Page
 
-First, run the development server:
+**Hypertrophic** es una landing page moderna y responsiva enfocada en mostrar la propuesta de valor de una marca de suplementos deportivos. Su diseño busca conectar visual y emocionalmente con el usuario, resaltando productos, beneficios y llamados a la acción directos como el contacto por WhatsApp y acceso al catálogo.
+
+---
+
+## 🚀 Tecnologías utilizadas
+
+- **Next.js 14 (App Router):** Framework de React para renderizado híbrido y performance optimizada.
+- **Tailwind CSS:** Framework de estilos utilitarios para construir interfaces modernas y responsivas.
+- **Lucide React:** Librería de íconos liviana y elegante.
+- **TypeScript:** Tipado fuerte para mayor robustez en desarrollo.
+- **Embla Carousel:** Carrusel minimalista para los testimonios.
+- **Google Fonts con `next/font`:** Uso de fuentes personalizadas como *Koulen*, *Montserrat* y *Roboto*.
+
+---
+
+## 📄 ¿Qué es una landing page?
+
+Una **landing page** es una página web diseñada con un único objetivo claro: convertir visitantes en clientes, suscriptores o leads. En este caso, la landing busca:
+
+- Presentar la identidad de la marca *Hypertrophic*.
+- Mostrar testimonios que generen confianza.
+- Facilitar contacto directo vía WhatsApp.
+- Invitar al usuario a explorar el catálogo.
+
+---
+
+## 🧪 Primeros pasos para desarrollo
+
+Ejecuta el servidor de desarrollo:
 
 ```bash
 npm run dev
-# or
+# o
 yarn dev
-# or
+# o
 pnpm dev
-# or
+# o
 bun dev
-```
-
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
-
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
-
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
