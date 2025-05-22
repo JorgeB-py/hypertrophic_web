@@ -4,7 +4,6 @@ import { koulen, montserrat, roboto } from "@/fonts/fonts";
 import { Button } from "@/components/ui/button";
 import CarouselTestimonials from "@/components/shared/testimonials";
 import { Testimonials } from "@/components/shared/testimonials";
-import { ShoppingBag, Store } from "lucide-react";
 
 export default function Home() {
   const testimonials: Testimonials[] = [
