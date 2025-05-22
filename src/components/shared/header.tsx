@@ -2,11 +2,15 @@
 import Image from "next/image";
 import { Menu, X } from "lucide-react";
 import * as DropdownMenu from "@radix-ui/react-dropdown-menu";
+import { roboto } from "@/fonts/fonts";
+import Link from "next/link";
 
 export default function Header() {
   return (
     <header className="flex justify-between items-center p-6 text-white">
-      <Image src={'/imagen_h_blanca.png'} alt={"logo"} width={70} height={70} />
+        <Link href={"/"}>
+            <Image src={'/imagen_h_blanca.png'} alt={"logo"} width={90} height={90} />
+        </Link>
 
       <DropdownMenu.Root>
         <DropdownMenu.Trigger className="lg:hidden p-2">
@@ -19,28 +23,28 @@ export default function Header() {
             sideOffset={5}
           >
             <DropdownMenu.Item>
-              <a href="#" className="block px-4 py-2 hover:bg-gray-700 rounded">
+              <Link href="#" className="block px-4 py-2 hover:bg-gray-700 rounded">
                 Nosotros
-              </a>
+              </Link>
             </DropdownMenu.Item>
             <DropdownMenu.Item>
-              <a href="#" className="block px-4 py-2 hover:bg-gray-700 rounded">
+              <Link href="#" className="block px-4 py-2 hover:bg-gray-700 rounded">
                 Catálogo
-              </a>
+              </Link>
             </DropdownMenu.Item>
             <DropdownMenu.Item>
-              <a href="#" className="block px-4 py-2 hover:bg-gray-700 rounded">
+              <Link href="#" className="block px-4 py-2 hover:bg-gray-700 rounded">
                 Contáctanos
-              </a>
+              </Link>
             </DropdownMenu.Item>
           </DropdownMenu.Content>
         </DropdownMenu.Portal>
       </DropdownMenu.Root>
 
       <nav className="hidden lg:flex lg:justify-end lg:space-x-6">
-        <a className="p-4 hover:text-gray-400" href="#">Nosotros</a>
-        <a className="p-4 hover:text-gray-400" href="#">Catálogo</a>
-        <a className="p-4 hover:text-gray-400" href="#">Contáctanos</a>
+        <Link className={`${roboto.className} p-4 hover:text-gray-400 text-2xl`} href="#">Nosotros</Link>
+        <Link className={`${roboto.className} p-4 hover:text-gray-400 text-2xl`} href="#">Catálogo</Link>
+        <Link className={`${roboto.className} p-4 hover:text-gray-400 text-2xl`} href="#">Contáctanos</Link>
       </nav>
     </header>
   );
