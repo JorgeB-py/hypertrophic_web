@@ -143,3 +143,12 @@
   }
 }
 
+@keyframes pulse-glow {
+  0%, 100% { text-shadow: 0 0 8px #ff4040, 0 0 18px #ff2020; }
+  50%      { text-shadow: 0 0 18px #ff8080, 0 0 30px #ff4040; }
+}
+
+.logo-loop {             /* clase solo para el h1 */
+  animation: pulse-glow 3s ease-in-out infinite;
+}
+
