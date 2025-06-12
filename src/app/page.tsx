@@ -6,9 +6,9 @@ import { Button } from "@/components/ui/button";
 import CarouselTestimonials, {
   Testimonials,
 } from "@/components/shared/testimonials";
+import Team from "@/components/shared/team";
 
 export default function Home() {
-  // ───── Testimonios de ejemplo ─────
   const testimonials: Testimonials[] = [
     {
       name: "Federico Reyes",
@@ -47,7 +47,7 @@ export default function Home() {
           {/* Botella flotante */}
           <div className="animate-[float_3s_ease-in-out_infinite]">
             <Image
-              src="/nitrotech.png"
+              src="/wheygold.png"
               width={353}
               height={353}
               alt="NitroTech"
@@ -81,7 +81,7 @@ export default function Home() {
       {/* ──────────── FRASE + IMAGEN ──────────── */}
       <section className="relative isolate flex flex-col items-center gap-6 py-12">
         {/* Overlay sutil para contraste */}
-        <div className="absolute inset-0 -z-10 bg-gradient-to-b from-transparent via-black/20 to-black/40" />
+        <div className="absolute inset-0 -z-10" />
 
         <Image src="/ronnie.png" width={325} height={647} alt="Ronnie Coleman" />
 
@@ -90,20 +90,22 @@ export default function Home() {
         >
           “Cada gramo cuenta. Cada esfuerzo importa”
         </h2>
+        <Divider />
       </section>
 
       {/* ───────────── TESTIMONIOS ───────────── */}
-      <section className="bg-[#220000]/70 rounded-3xl py-12 flex flex-col items-center gap-8">
+      <section className="py-12 flex flex-col items-center gap-8">
         <div className="w-full max-w-md">
           <CarouselTestimonials testimonials={testimonials} />
         </div>
+        <Divider />
       </section>
+
+      {/* ───────────── EQUIPO ───────────── */}
+      <Team />
 
       {/* ───────────── CTA CATÁLOGO ───────────── */}
       <section className="flex flex-col items-center gap-6">
-        {/* Divider sutil */}
-        <div className="h-px w-1/2 bg-gradient-to-r from-transparent via-red-800 to-transparent" />
-
         <h2
           className={`${montserrat.className} text-center text-[clamp(1.5rem,4vw,2.5rem)] max-w-md font-extrabold`}
         >
@@ -129,4 +131,10 @@ export default function Home() {
       </section>
     </main>
   );
+}
+
+export function Divider(){
+  return(
+    <div className="h-px w-1/2 bg-gradient-to-r from-transparent via-red-800 to-transparent" />
+  )
 }

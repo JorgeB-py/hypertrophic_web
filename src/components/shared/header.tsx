@@ -49,9 +49,9 @@ export default function Header() {
 
       <nav className="hidden lg:flex lg:justify-end lg:space-x-6">
         <Link className={`${roboto.className} p-4 hover:text-gray-400 text-2xl`} href="/nosotros">Nosotros</Link>
-        <Link className={`${roboto.className} p-4 hover:text-gray-400 text-2xl`} href="https://drive.google.com/file/d/1GQ_7HqssFydWHnBEJFqOhCZdBZTdmjWq/view">Catálogo</Link>
+        <Link className={`${roboto.className} p-4 hover:text-gray-400 text-2xl`} href="/catalogo">Catálogo</Link>
         <Link className={`${roboto.className} p-4 hover:text-gray-400 text-2xl`} href="/destacados">Destacados</Link>
-        <Link className={`${roboto.className} p-4 hover:text-gray-400 text-2xl`} href="https://wa.me/573132496945">Contáctanos</Link>
+        <a className={`${roboto.className} p-4 hover:text-gray-400 text-2xl`} href="https://wa.me/573132496945">Contáctanos</a>
       </nav>
     </header>
   );
