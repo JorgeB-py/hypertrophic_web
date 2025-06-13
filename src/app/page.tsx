@@ -40,8 +40,8 @@ export default function Home() {
       {/* ───────────── HERO ───────────── */}
       <section className="flex flex-col items-center gap-8">
         <h1
-          className={`${koulen.className} logo-loop text-center break-words leading-none
-    text-[clamp(4.5rem,9vw,7rem)] 
+          className={`${koulen.className} logo-loop text-center leading-none
+    text-[clamp(4.2rem,9vw,7rem)] 
     sm:text-[clamp(5rem,12vw,10rem)]
     md:text-[clamp(6rem,14vw,14rem)]
     max-w-full`}
