@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Link from "next/link";
 
 export default function Footer() {
     return (
@@ -12,7 +13,7 @@ export default function Footer() {
             />
             <p>© 2025, Hypertrofic | Todos los derechos reservados</p>
             <nav className="flex justify-center">
-                <a className="pr-2">Nosotros |</a>
+                <Link href="/nosotros" className="pr-2">Nosotros |</Link>
                 <a className="pr-2">Términos y condiciones |</a>
                 <a className="pr-2">Política de privacidad</a>
             </nav>
