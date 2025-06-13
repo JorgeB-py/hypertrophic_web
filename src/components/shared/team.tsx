@@ -2,7 +2,7 @@
 import Image from "next/image";
 import { montserrat, roboto } from "@/fonts/fonts";
 import { Card, CardContent } from "@/components/ui/card";
-import { Divider } from "@/app/page";
+import Divider from "./divider";
 
 export default function Team() {
   const equipo = [

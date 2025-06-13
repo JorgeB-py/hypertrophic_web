@@ -7,8 +7,11 @@ import CarouselTestimonials, {
   Testimonials,
 } from "@/components/shared/testimonials";
 import Team from "@/components/shared/team";
+import { useRouter } from "next/navigation";
+import Divider from "@/components/shared/divider";
 
 export default function Home() {
+  const router = useRouter();
   const testimonials: Testimonials[] = [
     {
       name: "Federico Reyes",
@@ -28,10 +31,9 @@ export default function Home() {
 
   // ───── Handlers externos ─────
   const whatsappAPI = () => window.open("https://wa.me/573132496945");
-  const catalogHandle = () =>
-    window.open(
-      "https://drive.google.com/file/d/1GQ_7HqssFydWHnBEJFqOhCZdBZTdmjWq/view"
-    );
+  const catalogHandle = () =>{
+      router.push("/catalogo");
+      }
 
   return (
     <main className="max-w-7xl mx-auto pt-8 pb-12 space-y-24 text-white">
@@ -65,7 +67,7 @@ export default function Home() {
 
             <Button
               onClick={whatsappAPI}
-              className="bg-[#A40606] hover:bg-[#A40606]/80 w-60 h-12 rounded-3xl flex items-center justify-center gap-3"
+              className="bg-[#A40606] hover:bg-[#A40606]/80 w-60 h-12 rounded-3xl flex items-center cursor-pointer justify-center gap-3"
             >
               <Image src="/wpp.png" width={37} height={37} alt="WhatsApp" />
               <span
@@ -114,7 +116,7 @@ export default function Home() {
 
         <Button
           onClick={catalogHandle}
-          className="bg-[#A40606] hover:bg-[#A40606]/80 w-80 h-12 rounded-3xl flex items-center justify-center gap-4"
+          className="bg-[#A40606] hover:bg-[#A40606]/80 w-80 h-12 rounded-3xl flex items-center justify-center gap-4 cursor-pointer"
         >
           <Image
             src="/shopping-bag.png"
@@ -131,10 +133,4 @@ export default function Home() {
       </section>
     </main>
   );
-}
-
-export function Divider(){
-  return(
-    <div className="h-px w-1/2 bg-gradient-to-r from-transparent via-red-800 to-transparent" />
-  )
 }
