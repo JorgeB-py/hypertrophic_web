@@ -1,6 +1,6 @@
 "use client"
 import Image from "next/image";
-import { Menu, X } from "lucide-react";
+import { Menu } from "lucide-react";
 import * as DropdownMenu from "@radix-ui/react-dropdown-menu";
 import { roboto } from "@/fonts/fonts";
 import Link from "next/link";

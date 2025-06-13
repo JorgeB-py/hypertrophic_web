@@ -31,7 +31,7 @@ export default function Productos() {
               className="group relative w-[200px] h-[280px] rounded-xl bg-[linear-gradient(180deg,#a40606_60%,#1a1a1a)]
  drop-shadow-[0_0_25px_rgba(255,0,0,0.6)] hover:scale-105 transition-transform duration-300 perspective-[1000px]"
             >
-              <div className="absolute inset-0 w-full h-full transition-transform duration-700 [transform-style:preserve-3d] group-hover:[transform:rotateY(180deg)]">
+              <CardContent className="absolute inset-0 w-full h-full transition-transform duration-700 [transform-style:preserve-3d] group-hover:[transform:rotateY(180deg)]">
                 {/* Front */}
                 <div className="absolute inset-0 flex flex-col items-center justify-center p-4 [backface-visibility:hidden]">
                   <Image src={producto.image} alt={producto.name} width={140} height={140} className="object-contain" />
@@ -45,7 +45,7 @@ export default function Productos() {
                   <p className="text-sm mb-3">{producto.description}</p>
                   <Image src={producto.image /* o logo si lo deseas */} alt={producto.name} width={80} height={40} className="object-contain" />
                 </div>
-              </div>
+              </CardContent>
             </Card>
           ))}
         </div>

@@ -23,7 +23,7 @@ function CarouselTestimonials({ testimonials }: { testimonials: Testimonials[] }
                 <Card className="bg-transparent shadow-none border-none">
                   <CardContent className="flex aspect-square items-center justify-center p-6 flex-col bg-transparent">
                     <span className={`${montserrat.className} text-center text-[clamp(1.5rem,4vw,2.5rem)] max-w-md text-white font-extrabold`}>
-                      "{testimonial.description}"
+                      &quot;{testimonial.description}&quot;
                     </span>
                     <span className={`${montserrat.className} text-center text-[clamp(1.5rem,4vw,2.5rem)] max-w-md text-white font-extrabold`}>
                       - {testimonial.name}
