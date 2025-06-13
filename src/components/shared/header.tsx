@@ -23,24 +23,24 @@ export default function Header() {
             sideOffset={5}
           >
             <DropdownMenu.Item>
-              <Link href="#" className="block px-4 py-2 hover:bg-gray-700 rounded">
+              <Link href="/nosotros" className="block px-4 py-2 hover:bg-gray-700 rounded">
                 Nosotros
               </Link>
             </DropdownMenu.Item>
             <DropdownMenu.Item>
-              <Link href="#" className="block px-4 py-2 hover:bg-gray-700 rounded">
+              <Link href="/catalogo" className="block px-4 py-2 hover:bg-gray-700 rounded">
                 Catálogo
               </Link>
             </DropdownMenu.Item>
             <DropdownMenu.Item>
-              <Link href="#" className="block px-4 py-2 hover:bg-gray-700 rounded">
+              <Link href="/destacados" className="block px-4 py-2 hover:bg-gray-700 rounded">
                 Destacados
               </Link>
             </DropdownMenu.Item>
             <DropdownMenu.Item>
-              <Link href="#" className="block px-4 py-2 hover:bg-gray-700 rounded">
+              <a href="https://wa.me/573132496945" className="block px-4 py-2 hover:bg-gray-700 rounded">
                 Contáctanos
-              </Link>
+              </a>
             </DropdownMenu.Item>
             
           </DropdownMenu.Content>

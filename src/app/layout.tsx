@@ -5,6 +5,7 @@ import Footer from "@/components/shared/footer";
 
 export const metadata: Metadata = {
   title: "Hypertrophic",
+  viewport: "width=device-width, initial-scale=1",
 };
 
 export default function RootLayout({
