@@ -36,8 +36,8 @@ export default function Catalogo() {
   useEffect(() => { setPage(1); }, [marca, query]);
 
   return (
-    <main className="max-w-7xl mx-auto p-6 min-h-screen text-white space-y-8">
-      <section className="flex flex-col items-center gap-8">
+    <section className="p-6 text-white space-y-8">
+      <article className="flex flex-col items-center gap-8">
         <h2 className={`${montserrat.className} text-4xl font-extrabold text-center`}>
           Catálogo de productos
         </h2>
@@ -134,7 +134,7 @@ export default function Catalogo() {
             </button>
           </div>
         )}
-      </section>
-    </main>
+      </article>
+    </section>
   );
 }

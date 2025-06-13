@@ -31,36 +31,47 @@ export default function Home() {
 
   // ───── Handlers externos ─────
   const whatsappAPI = () => window.open("https://wa.me/573132496945");
-  const catalogHandle = () =>{
-      router.push("/catalogo");
-      }
+  const catalogHandle = () => {
+    router.push("/catalogo");
+  }
 
   return (
-    <main className="max-w-7xl mx-auto pt-8 pb-12 space-y-24 text-white">
+    <section className="pt-8 pb-12 space-y-24">
       {/* ───────────── HERO ───────────── */}
       <section className="flex flex-col items-center gap-8">
         <h1
-          className={`${koulen.className} logo-loop text-center text-[clamp(12rem,8vw,14rem)] leading-none`}
+          className={`${koulen.className} logo-loop text-center break-words leading-none
+    text-[clamp(4.5rem,9vw,7rem)] 
+    sm:text-[clamp(5rem,12vw,10rem)]
+    md:text-[clamp(6rem,14vw,14rem)]
+    max-w-full`}
         >
           HYPERTROPHIC
         </h1>
 
         <div className="flex flex-col md:flex-row items-center md:justify-center gap-16 w-full">
           {/* Botella flotante */}
-          <div className="animate-[float_3s_ease-in-out_infinite]">
+          <div className="animate-[float_3s_ease-in-out_infinite] w-[160px] sm:w-[220px] md:w-[270px] lg:w-[320px]">
             <Image
               src="/wheygold.png"
               width={353}
               height={353}
               alt="NitroTech"
-              className="max-w-full h-auto"
+              className="w-full h-auto max-w-full"
             />
           </div>
 
           {/* Lema + botón */}
           <div className="flex flex-col items-center gap-6">
             <h2
-              className={`${montserrat.className} text-center text-[clamp(1.5rem,4vw,2.5rem)] max-w-md`}
+              className={`
+        ${montserrat.className}
+        text-center
+        text-[clamp(1.1rem,4vw,2.5rem)]
+        sm:text-[clamp(1.4rem,5vw,2.7rem)]
+        md:text-[clamp(1.5rem,4vw,3rem)]
+        max-w-[90vw] md:max-w-md
+      `}
             >
               MÁS ALLÁ DE LOS SUPLEMENTOS. MÁS ALLÁ DE LOS LÍMITES.
             </h2>
@@ -131,6 +142,6 @@ export default function Home() {
           </span>
         </Button>
       </section>
-    </main>
+    </section>
   );
 }

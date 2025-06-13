@@ -19,8 +19,8 @@ const destacados = productos.filter(p =>
 
 export default function Productos() {
   return (
-    <main className="max-w-7xl mx-auto p-6 min-h-screen text-white">
-      <section className="flex flex-col items-center gap-8">
+    <section className="p-6 text-white">
+      <article className="flex flex-col items-center gap-8">
         <h2 className={`${montserrat.className} text-4xl font-extrabold text-center`}>
           Nuestros productos destacados
         </h2>
@@ -49,7 +49,7 @@ export default function Productos() {
             </Card>
           ))}
         </div>
-      </section>
-    </main>
+      </article>
+    </section>
   );
 }

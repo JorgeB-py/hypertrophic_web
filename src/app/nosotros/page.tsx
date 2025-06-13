@@ -4,12 +4,12 @@ import { montserrat, roboto } from "@/fonts/fonts";
 
 export default function Nosotros() {
   return (
-    <main className="max-w-7xl mx-auto p-4 min-h-screen space-y-20 text-white">
+    <section className="space-y-20">
       {/* ───── EQUIPO ───── */}
       <Team />
 
       {/* ───── MISIÓN ───── */}
-      <section className="flex flex-col items-center gap-6">
+      <article className="flex flex-col items-center gap-6">
         <h2
           className={`${montserrat.className} text-3xl font-extrabold text-center`}
         >
@@ -20,10 +20,10 @@ export default function Nosotros() {
           ofreciendo productos auténticos, contenido honesto y una comunidad que
           valora el esfuerzo real por encima de las apariencias.
         </p>
-      </section>
+      </article>
 
       {/* ───── VISIÓN ───── */}
-      <section className="flex flex-col items-center gap-6">
+      <article className="flex flex-col items-center gap-6">
         <h2
           className={`${montserrat.className} text-3xl font-extrabold text-center`}
         >
@@ -35,10 +35,10 @@ export default function Nosotros() {
           sólida que se expanda por Latinoamérica, guiada por la disciplina, el
           conocimiento y la autenticidad.
         </p>
-      </section>
+      </article>
 
       {/* ───── COMPROMISO ───── */}
-      <section className="flex flex-col items-center gap-6 pb-10">
+      <article className="flex flex-col items-center gap-6 pb-10">
         <h2
           className={`${montserrat.className} text-3xl font-extrabold text-center`}
         >
@@ -58,7 +58,7 @@ export default function Nosotros() {
             promesas falsas.
           </li>
         </ul>
-      </section>
-    </main>
+      </article>
+    </section>
   );
 }
