@@ -1,4 +1,18 @@
 'use client';
+declare global {
+  interface Window {
+    MercadoPago: new (
+      publicKey: string,
+      options?: { locale?: string }
+    ) => {
+      checkout: (options: {
+        preference: { id: string };
+        autoOpen?: boolean;
+      }) => void;
+    };
+  }
+}
+
 
 import { useState } from 'react';
 import { Button } from '@/components/ui/button';
@@ -36,6 +50,8 @@ export default function CartPage() {
               <Image
                 src={it.image}
                 alt={it.name}
+                width={50}
+                height={50}
                 className="w-20 h-20 object-contain border border-zinc-700 rounded"
               />
               <div className="flex-grow">
@@ -84,7 +100,7 @@ export default function CartPage() {
                 placeholder="Nombre completo"
                 value={formData.name}
                 onChange={e => setFormData({ ...formData, name: e.target.value })}
-                className="bg-zinc-800 text-white border-zinc-700"
+                className="col-span-1 md:col-span-2 bg-zinc-800 text-white border-zinc-700"
               />
               <Input
                 placeholder="Tipo de documento"
@@ -103,7 +119,7 @@ export default function CartPage() {
                 type="email"
                 value={formData.email}
                 onChange={e => setFormData({ ...formData, email: e.target.value })}
-                className="bg-zinc-800 text-white border-zinc-700"
+                className="col-span-1 md:col-span-2 bg-zinc-800 text-white border-zinc-700"
               />
               <Input
                 placeholder="Dirección de envío"
