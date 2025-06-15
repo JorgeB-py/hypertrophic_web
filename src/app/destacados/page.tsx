@@ -2,7 +2,9 @@
 import Image from "next/image";
 import { Card, CardContent, CardFooter } from "@/components/ui/card";
 import { montserrat } from "@/fonts/fonts";
-import { productos } from "@/services/productos.service";
+import { useEffect, useState } from "react";
+import { getAllProductos } from "@/services/firebase.service";
+import { Product } from "@/interfaces/product";
 
 const destacadosKeys = [
   "Creatine platinum",   // platinum
@@ -13,11 +15,19 @@ const destacadosKeys = [
   "ISO 100",
 ];
 
-const destacados = productos.filter(p =>
-  destacadosKeys.includes(p.name)
-);
-
 export default function Productos() {
+  const [products, setProducts] = useState<Product[] | undefined>();
+
+  useEffect(() => {
+    (async () => {
+      const productos = await getAllProductos();
+      setProducts(productos);
+    })();
+  }, []);
+  const destacados = (products ?? []).filter(p =>
+    destacadosKeys.includes(p.name)
+  );
+
   return (
     <section className="p-6 text-white">
       <article className="flex flex-col items-center gap-8">

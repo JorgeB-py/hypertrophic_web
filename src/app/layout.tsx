@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from "next";
 import "./globals.css";
 import Header from "@/components/shared/header";
 import Footer from "@/components/shared/footer";
+import Script from "next/script";
 
 export const metadata: Metadata = {
   title: "Hypertrophic"
@@ -21,6 +22,12 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
+      <head>
+        <Script
+          src="https://sdk.mercadopago.com/js/v2"
+          strategy="afterInteractive"
+        />
+      </head>
       <body className="bg-[url('/fondo.png')] bg-cover bg-center">
         <div className="min-h-screen grid grid-rows-[auto_1fr_auto]">
           <Header />
