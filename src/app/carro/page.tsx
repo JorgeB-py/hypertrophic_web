@@ -194,7 +194,7 @@ async function checkout(
   try {
     await waitForMP();
 
-    const mp = new window.MercadoPago(`${process.env.NEXT_PUBLIC_MP_PUBLIC_KEY}`, {
+    const mp = new window.MercadoPago(`${process.env.NEXT_PRIVATE_MP_PUBLIC_KEY}`, {
       locale: 'es-CO',
     });
 

@@ -17,7 +17,7 @@ export default function SuccessPageContent() {
     const fetchAndSend = async () => {
       const res = await fetch(`https://api.mercadopago.com/v1/payments/${paymentId}`, {
         headers: {
-          Authorization: `Bearer ${process.env.NEXT_PUBLIC_MP_ACCESS_TOKEN}`,
+          Authorization: `Bearer ${process.env.NEXT_PRIVATE_MP_ACCESS_TOKEN}`,
         },
       });
 
