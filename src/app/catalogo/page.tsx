@@ -54,11 +54,6 @@ export default function Catalogo() {
     [products]
   );
 
-  const marketLogo: Record<string, string> = useMemo(
-    () => Object.fromEntries(markets.map(m => [m.name, m.image])),
-    [markets]
-  );
-
   /* ──────────────────── Filtros y paginación ──────────────────── */
   const visibles = products.filter(
     p =>

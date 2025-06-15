@@ -1,3 +1,4 @@
+import Link from 'next/link';
 import { redirect } from 'next/navigation';
 
 export default async function FailurePage({ searchParams }: { searchParams: { [key: string]: string } }) {
@@ -30,9 +31,9 @@ export default async function FailurePage({ searchParams }: { searchParams: { [k
             </div>
           ))}
         </div>
-        <a href="/" className="block mt-6 text-center bg-red-600 hover:bg-red-700 text-white font-semibold py-2 px-4 rounded">
+        <Link href="/" className="block mt-6 text-center bg-red-600 hover:bg-red-700 text-white font-semibold py-2 px-4 rounded">
           Volver al inicio
-        </a>
+        </Link>
       </div>
     </main>
   );

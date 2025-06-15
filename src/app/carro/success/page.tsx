@@ -3,6 +3,8 @@
 import { useEffect } from 'react';
 import { redirect, useSearchParams } from 'next/navigation';
 import { useCart } from '@/lib/cartStore';
+import Link from 'next/link';
+import { CheckoutData, CheckoutItem } from '@/interfaces/checkout';
 
 export default function SuccessPage() {
   const params = useSearchParams();
@@ -26,9 +28,9 @@ export default function SuccessPage() {
 
       // 🟢 Enviar el correo
       if (checkoutData) {
-        const { items, customer } = checkoutData;
+        const { items, customer } = checkoutData as CheckoutData;
         const total = items.reduce(
-          (sum: number, item: any) => sum + item.quantity * item.unit_price,
+          (sum, item) => sum + item.quantity * item.unit_price,
           0
         );
 
@@ -59,12 +61,12 @@ export default function SuccessPage() {
       <div className="bg-white shadow-lg rounded-lg p-8 max-w-md w-full">
         <h1 className="text-2xl font-bold text-green-700 mb-4 text-center">✅ Pago aprobado</h1>
         <p className="text-center text-gray-700">Hemos recibido tu pedido. Te notificaremos pronto.</p>
-        <a
+        <Link
           href="/"
           className="block mt-6 text-center bg-green-600 hover:bg-green-700 text-white font-semibold py-2 px-4 rounded"
         >
           Volver al inicio
-        </a>
+        </Link>
       </div>
     </main>
   );
