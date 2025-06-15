@@ -2,21 +2,19 @@
 
 import { useState, useMemo, useEffect } from 'react';
 import Image from 'next/image';
-import { Market } from '@/interfaces/market';
 import { Product } from '@/interfaces/product';
 import { Card, CardContent, CardFooter } from '@/components/ui/card';
 import { montserrat, roboto } from '@/fonts/fonts';
 import { useCart } from '@/lib/cartStore';
 import { useRouter } from 'next/navigation';
 import { Button } from '@/components/ui/button'; // shadcn
-import { getAllMarcas, getAllProductos } from '@/services/firebase.service';
+import { getAllProductos } from '@/services/firebase.service';
 
 export default function Catalogo() {
   const router = useRouter();
   const addToCart = useCart(state => state.add);
 
   const [products, setProducts] = useState<Product[]>([]);
-  const [markets, setMarkets] = useState<Market[]>([]);
   const [query, setQuery] = useState('');
   const [marca, setMarca] = useState('all');
   const [page, setPage] = useState(1);
@@ -38,13 +36,6 @@ export default function Catalogo() {
     (async () => {
       const productos = await getAllProductos();
       setProducts(productos);
-    })();
-  }, []);
-
-  useEffect(() => {
-    (async () => {
-      const marcas = await getAllMarcas();
-      setMarkets(marcas);
     })();
   }, []);
 

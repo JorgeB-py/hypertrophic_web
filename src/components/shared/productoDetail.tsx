@@ -121,7 +121,7 @@ export default function ProductDetail({ id }: { id: string }) {
                                 size="lg"
                                 className="flex-1 cursor-pointer hover:bg-red-700"
                                 disabled={!product.stock}
-                                onClick={() => { handleAdd(), setOpen(true) }}
+                                onClick={() => { handleAdd(); setOpen(true) }}
                             >
                                 Agregar al carrito
                             </Button>

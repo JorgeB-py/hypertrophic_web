@@ -1,3 +1,4 @@
+import { CheckoutItem } from '@/interfaces/checkout';
 import { NextRequest, NextResponse } from 'next/server';
 import { Resend } from 'resend';
 
@@ -16,7 +17,7 @@ export async function POST(req: NextRequest) {
     <ul>
       ${items
         .map(
-          (item: any) =>
+          (item: CheckoutItem) =>
             `<li>${item.quantity} x ${item.title} - $${item.unit_price.toLocaleString()}</li>`
         )
         .join('')}
@@ -25,7 +26,7 @@ export async function POST(req: NextRequest) {
   `;
 
   try {
-    const data = await resend.emails.send({
+    await resend.emails.send({
       from: 'Hypertrophic <noreply@resend.dev>',
       to: 'hypertrophic27.5@gmail.com', // Cambia por tu correo real
       subject: '🛍️ Nuevo pedido confirmado',

@@ -6,6 +6,7 @@ import { Input } from '@/components/ui/input';
 import { CartItem } from '@/interfaces/cart';
 import { useCart } from '@/lib/cartStore';
 import { Trash } from 'lucide-react';
+import Image from 'next/image';
 
 export default function CartPage() {
   const { items, remove, totalPrice, updateQuantity } = useCart();
@@ -32,7 +33,7 @@ export default function CartPage() {
               key={it.id}
               className="flex gap-4 mb-4 items-center bg-zinc-900 p-4 rounded-lg shadow-sm"
             >
-              <img
+              <Image
                 src={it.image}
                 alt={it.name}
                 className="w-20 h-20 object-contain border border-zinc-700 rounded"

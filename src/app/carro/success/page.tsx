@@ -4,7 +4,7 @@ import { useEffect } from 'react';
 import { redirect, useSearchParams } from 'next/navigation';
 import { useCart } from '@/lib/cartStore';
 import Link from 'next/link';
-import { CheckoutData, CheckoutItem } from '@/interfaces/checkout';
+import { CheckoutData } from '@/interfaces/checkout';
 
 export default function SuccessPage() {
   const params = useSearchParams();
@@ -49,12 +49,12 @@ export default function SuccessPage() {
           }),
         });
 
-        clear(); // Limpiar carrito
+        clear();
       }
     };
 
     fetchAndSend();
-  }, [paymentId, checkoutData]);
+  }, [paymentId, checkoutData, clear]);
 
   return (
     <main className="min-h-screen flex flex-col items-center justify-center bg-green-50 px-4">
