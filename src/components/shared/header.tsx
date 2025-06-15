@@ -43,6 +43,9 @@ export default function Header() {
                 Contáctanos
               </a>
             </DropdownMenu.Item>
+            <DropdownMenu.Item>
+              <CartIcon></CartIcon>
+            </DropdownMenu.Item>
             
           </DropdownMenu.Content>
         </DropdownMenu.Portal>
