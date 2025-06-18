@@ -3,9 +3,8 @@
 import { useState, useMemo, useEffect } from 'react';
 import Image from 'next/image';
 import { Product } from '@/interfaces/product';
-import { Card, CardContent, CardFooter } from '@/components/ui/card';
+import { Card} from '@/components/ui/card';
 import { montserrat, roboto } from '@/fonts/fonts';
-import { useCart } from '@/lib/cartStore';
 import { useRouter } from 'next/navigation';
 import { Button } from '@/components/ui/button'; // shadcn
 import { getAllProductos } from '@/services/firebase.service';
@@ -13,7 +12,6 @@ import { Input } from '@/components/ui/input';
 
 export default function Catalogo() {
   const router = useRouter();
-  const addToCart = useCart(state => state.add);
 
   const [products, setProducts] = useState<Product[]>([]);
   const [query, setQuery] = useState('');
