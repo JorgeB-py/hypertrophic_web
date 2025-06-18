@@ -60,7 +60,7 @@ export default function CartPage() {
               </div>
               <Input
                 type="number"
-                value={it.stock}
+                value={it.qty || 1}
                 min={0}
                 onChange={(e) => {
                   const val = e.target.value;
@@ -162,7 +162,7 @@ async function checkout(
 ) {
   const mappedItems = items.map(item => ({
     title: item.name,
-    quantity: item.stock,
+    quantity: item.qty,
     unit_price: Number(item.price),
     currency_id: 'COP',
   }));

@@ -2,7 +2,15 @@
 
 import { create } from 'zustand';
 import { persist, devtools } from 'zustand/middleware';
-import { CartItem } from '@/interfaces/cart';
+
+/* ─── Modelo ─── */
+export interface CartItem {
+  id: string;
+  name: string;
+  price: number;
+  image: string;
+  qty: number;          // 👈 cantidad en el carrito
+}
 
 type CheckoutData = {
   items: {
@@ -11,13 +19,21 @@ type CheckoutData = {
     unit_price: number;
     currency_id: string;
   }[];
-  customer: { name: string; address: string; email: string, phone:string, document: string, type:string }
+  customer: {
+    name: string;
+    address: string;
+    email: string;
+    phone: string;
+    document: string;
+    type: string;
+  };
 };
 
 type CartState = {
   items: CartItem[];
   checkoutData: CheckoutData | null;
-  add: (item: Omit<CartItem, 'stock'>) => void;
+  /* recibe qty opcional */
+  add: (item: Omit<CartItem, 'qty'> & { qty?: number }) => void;
   remove: (id: string) => void;
   clear: () => void;
   totalItems: () => number;
@@ -26,6 +42,7 @@ type CartState = {
   setCheckoutData: (data: CheckoutData) => void;
 };
 
+/* ─── Store ─── */
 export const useCart = create<CartState>()(
   devtools(
     persist(
@@ -33,14 +50,17 @@ export const useCart = create<CartState>()(
         items: [],
         checkoutData: null,
 
+        /* add ahora suma la cantidad que envíes */
         add: (item) =>
           set(state => {
             const idx = state.items.findIndex(i => i.id === item.id);
+            const addQty = item.qty ?? 1;            // por defecto 1
+
             if (idx > -1) {
-              state.items[idx].stock += 1;
+              state.items[idx].qty += addQty;
               return { items: [...state.items] };
             }
-            return { items: [...state.items, { ...item, stock: 1 }] };
+            return { items: [...state.items, { ...item, qty: addQty }] };
           }),
 
         remove: (id) =>
@@ -49,15 +69,15 @@ export const useCart = create<CartState>()(
         clear: () => set({ items: [], checkoutData: null }),
 
         totalItems: () =>
-          get().items.reduce((sum, i) => sum + i.stock, 0),
+          get().items.reduce((sum, i) => sum + i.qty, 0),
 
         totalPrice: () =>
-          get().items.reduce((sum, i) => sum + i.stock * i.price, 0),
+          get().items.reduce((sum, i) => sum + i.qty * i.price, 0),
 
         updateQuantity: (id, quantity) =>
           set(state => ({
             items: state.items.map(item =>
-              item.id === id ? { ...item, stock: quantity } : item
+              item.id === id ? { ...item, qty: quantity } : item
             ),
           })),
 

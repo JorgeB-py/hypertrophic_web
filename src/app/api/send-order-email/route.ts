@@ -27,7 +27,7 @@ export async function POST(req: NextRequest) {
 
   try {
     await resend.emails.send({
-      from: 'Hypertrophic <noreply@resend.dev>',
+      from: 'Confirmation <onboarding@resend.dev>',
       to: 'hypertrophic27.5@gmail.com', // Cambia por tu correo real
       subject: '🛍️ Nuevo pedido confirmado',
       html,

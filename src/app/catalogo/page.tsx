@@ -9,6 +9,7 @@ import { useCart } from '@/lib/cartStore';
 import { useRouter } from 'next/navigation';
 import { Button } from '@/components/ui/button'; // shadcn
 import { getAllProductos } from '@/services/firebase.service';
+import { Input } from '@/components/ui/input';
 
 export default function Catalogo() {
   const router = useRouter();
@@ -19,17 +20,6 @@ export default function Catalogo() {
   const [marca, setMarca] = useState('all');
   const [page, setPage] = useState(1);
   const perPage = 15;
-
-  const handleClick = (e: React.MouseEvent, p: Product) => {
-    e.stopPropagation();
-    addToCart({
-      id: p.id,
-      name: p.name,
-      price: p.price,
-      image: p.image,
-    });
-
-  }
 
   /* ──────────────────── Firestore ──────────────────── */
   useEffect(() => {
@@ -59,7 +49,7 @@ export default function Catalogo() {
 
   /* ──────────────────── Render ──────────────────── */
   return (
-    <section className="p-6 text-white space-y-8">
+    <section className="p-6 text-white space-y-8 flex flex-col items-center justify-center">
       <h2
         className={`${montserrat.className} text-4xl font-extrabold text-center`}
       >
@@ -68,7 +58,7 @@ export default function Catalogo() {
 
       {/* ───────────── Filtros ───────────── */}
       <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-        <input
+        <Input
           type="text"
           placeholder="Buscar producto…"
           value={query}
@@ -92,46 +82,41 @@ export default function Catalogo() {
       </div>
 
       {/* ───────────── Grid de productos ───────────── */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 xl:grid-cols-5 gap-8">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 xl:grid-cols-5 gap-8 justify-center">
         {pageProducts.map(p => (
           <Card
             key={p.id}
             role="button"
             tabIndex={0}
-            className="relative w-[200px] h-[300px] bg-[linear-gradient(180deg,#a40606_60%,#1a1a1a)]
-                       rounded-xl overflow-hidden transition-transform duration-300
-                       hover:scale-105 drop-shadow-[0_0_25px_rgba(255,0,0,0.6)]"
+            className="flex flex-col items-center justify-center
+             w-[200px] h-[300px]
+             bg-[linear-gradient(180deg,#a40606_60%,#1a1a1a)]
+             rounded-xl overflow-hidden
+             transition-all duration-300 cursor-pointer
+             hover:scale-105 hover:brightness-110
+             hover:shadow-[0_0_25px_#ff0000aa] hover:ring-2
+             hover:ring-[#ff4d4d] ring-offset-2"
             onClick={() => router.push(`catalogo/${p.id}`)}
           >
-            <CardContent className="flex flex-col items-center justify-center pt-6 h-[210px] cursor-pointer">
+            {/* Imagen */}
+            <div className="flex justify-center items-center h-40">
               <Image
                 src={p.image}
                 alt={p.name}
                 width={140}
                 height={140}
-                className="object-contain"
+                className="object-contain max-h-40"
               />
-            </CardContent>
+            </div>
 
-            <CardFooter className="flex flex-col gap-2 pb-4">
-              <h3
-                className={`${montserrat.className} font-semibold text-sm text-center`}
-              >
-                {p.name}
-              </h3>
-              <p className="text-base font-bold text-center">
-                ${p.price?.toLocaleString('es-CO')}
-              </p>
-
-              <Button
-                size="sm"
-                className="w-full mt-1 cursor-pointer"
-                onClick={e => handleClick(e, p)}
-              >
-                Agregar al carrito
-              </Button>
-            </CardFooter>
+            {/* Nombre más centrado */}
+            <h3 className={`${montserrat.className} font-semibold text-sm text-center`}>
+              {p.name}
+            </h3>
           </Card>
+
+
+
         ))}
 
         {pageProducts.length === 0 && (

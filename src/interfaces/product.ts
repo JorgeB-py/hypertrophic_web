@@ -4,6 +4,13 @@ export interface Product {
   image: string;
   description: string;
   market: string;
-  stock: number;
-  price: number;
+  variants: Variant[]
+}
+
+export interface Variant{
+  sku: string,
+  flavor: string,
+  servings: number,
+  price: number,
+  stock: number
 }
