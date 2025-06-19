@@ -6,7 +6,7 @@ import { Product } from '@/interfaces/product';
 import { Card} from '@/components/ui/card';
 import { montserrat, roboto } from '@/fonts/fonts';
 import { useRouter } from 'next/navigation';
-import { Button } from '@/components/ui/button'; // shadcn
+import { Button } from '@/components/ui/button';
 import { getAllProductos } from '@/services/firebase.service';
 import { Input } from '@/components/ui/input';
 

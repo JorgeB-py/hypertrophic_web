@@ -11,7 +11,7 @@ export default function Footer() {
                 height={50}
                 className="mb-4"
             />
-            <p>© 2025, Hypertrofic | Todos los derechos reservados</p>
+            <p>© 2025, Hypertrophic | Todos los derechos reservados</p>
             <nav className="flex justify-center">
                 <Link href="/nosotros" className="pr-2">Nosotros |</Link>
                 <a className="pr-2">Términos y condiciones |</a>

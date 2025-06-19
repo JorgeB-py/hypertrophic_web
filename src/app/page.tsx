@@ -14,18 +14,13 @@ export default function Home() {
   const router = useRouter();
   const testimonials: Testimonials[] = [
     {
-      name: "Federico Reyes",
-      description:
-        "Excelentes productos y el primer envío gratis. ¡Súper recomendado!",
+      image:"testimonio1.jpeg"
     },
     {
-      name: "Ashley Saballet",
-      description:
-        "Mejoraron mi recuperación y energía. Atención al cliente de 10.",
+      image:"testimonio2.jpeg"
     },
     {
-      name: "Rosario Pino",
-      description: "¡Calidad top y asesoría profesional!",
+      image:"testimonio3.jpeg"
     },
   ];
 
