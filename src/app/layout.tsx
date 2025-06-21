@@ -31,6 +31,7 @@ export default function RootLayout({
       <body className="bg-[url('/fondo.png')] bg-cover bg-center">
         <div className="min-h-screen grid grid-rows-[auto_1fr_auto]">
           <Header />
+          <div className="h-[90px]" />
           <main className="w-full max-w-7xl mx-auto px-2 sm:px-4 md:px-8 min-h-0 text-white overflow-x-hidden">{children}</main>
           <Footer />
         </div>
