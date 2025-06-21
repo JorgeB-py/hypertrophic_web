@@ -2,6 +2,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Carousel, CarouselContent, CarouselItem } from "../ui/carousel";
 import Autoplay from "embla-carousel-autoplay";
 import Image from "next/image";
+import { montserrat } from "@/fonts/fonts";
 
 export interface Testimonials {
   image: string;
@@ -11,6 +12,9 @@ const base = "https://raw.githubusercontent.com/JorgeB-py/assets-hypertrophic/ma
 function CarouselTestimonials({ testimonials }: { testimonials: Testimonials[] }) {
   return (
     <>
+      <h2 className={`${montserrat.className} text-4xl font-extrabold text-center`}>
+        Opiniones de nuestros clientes
+      </h2>
       <Carousel className="overflow-hidden" plugins={[
         Autoplay({
           delay: 4000,

@@ -2,43 +2,48 @@
 
 import { useEffect, useState } from 'react';
 import Image from 'next/image';
-import { doc, getDoc } from 'firebase/firestore';
-import { db } from '@/lib/firebaseClient';
 import { useCart } from '@/lib/cartStore';
 import { useRouter } from 'next/navigation';
 import { Button } from '@/components/ui/button';
 import AlertDialogWrapper from './alertdialog';
-import { Product, Variant } from '@/interfaces/product';
+import { useProductStore } from '@/lib/productsStore';
 
 export default function ProductDetail({ id }: { id: string }) {
-  /* ──────── ESTADOS ──────── */
-  const [product, setProduct]   = useState<Product | null>(null);
-  const [variant, setVariant]   = useState<Variant | null>(null);
-  const [qty, setQty]           = useState(1);          // 👈 cantidad
-  const [open, setOpen]         = useState(false);
+  const { products } = useProductStore();
+  const product = products?.find(p => p.id === id) ?? null;
+  const [variant, setVariant] = useState(() => product?.variants?.[0] ?? null);
+  const [qty, setQty] = useState(1);
+  const [open, setOpen] = useState(false);
 
-  const add    = useCart(s => s.add);
+  const relatedProducts = (products ?? []).filter(p => p.id !== product?.id).slice(0, 4);
+
+  const add = useCart(s => s.add);
   const router = useRouter();
+  const fetchProducts = useProductStore(s => s.fetchProducts);
 
-  /* ──────── CARGA FIRESTORE ──────── */
   useEffect(() => {
-    let active = true;
-    (async () => {
-      const snap = await getDoc(doc(db, 'productos', id));
-      if (!snap.exists() || !active) return;
-      const p = { id: snap.id, ...snap.data() } as Product;
-      setProduct(p);
-      setVariant(p.variants?.[0] ?? null);
-    })();
-    return () => { active = false; };
-  }, [id]);
+    if (!products) {
+      fetchProducts();
+    }
+  }, [products, fetchProducts]);
 
-  if (!product || !variant)
-    return <div className="flex justify-center items-center py-20"><span className="animate-pulse">Cargando…</span></div>;
+  useEffect(() => {
+    if (product && !variant) {
+      setVariant(product.variants?.[0] ?? null);
+    }
+  }, [product, variant]);
 
-  /* ──────── HANDLERS ──────── */
+  if (!product || !variant) {
+    return (
+      <div className="flex justify-center items-center py-20">
+        <span className="animate-pulse">Cargando…</span>
+      </div>
+    );
+  }
+
+  const maxQty = variant.stock ?? 0;
+
   const handleAdd = () => {
-    // si tu store acepta qty directamente:
     add({
       id: variant.sku,
       name: `${product.name} – ${variant.flavor}`,
@@ -46,33 +51,30 @@ export default function ProductDetail({ id }: { id: string }) {
       image: product.image,
       qty,
     });
-
+    setOpen(true);
   };
 
-  const maxQty = variant.stock ?? 0;
-
-  /* ──────── RENDER ──────── */
   return (
     <>
       <section className="max-w-5xl mx-auto p-6">
         <div className="flex flex-col md:flex-row gap-10">
           {/* ─ Imagen ─ */}
-          <div className="relative w-full md:w-[48%] aspect-square">
+          <div className="relative w-full md:w-[40%] aspect-[4/5] rounded-xl overflow-hidden bg-gradient-to-br from-neutral-800 to-neutral-900 shadow-lg">
             <Image
               src={product.image}
               alt={product.name}
               fill
-              sizes="(min-width: 768px) 48vw, 100vw"
-              className="object-contain rounded-xl bg-neutral-900"
+              sizes="(min-width: 768px) 40vw, 100vw"
+              className="object-contain p-6"
               priority
             />
           </div>
 
           {/* ─ Info ─ */}
           <div className="flex-1 space-y-6">
-            <h1 className="text-2xl font-semibold">{product.name}</h1>
+            <h1 className="text-3xl font-bold text-white">{product.name}</h1>
 
-            <p className="whitespace-pre-line leading-relaxed">
+            <p className="whitespace-pre-line leading-relaxed text-neutral-300">
               {product.description}
             </p>
 
@@ -83,7 +85,7 @@ export default function ProductDetail({ id }: { id: string }) {
                 onChange={e =>
                   setVariant(product.variants!.find(v => v.sku === e.target.value)!)
                 }
-                className="w-full border rounded-md p-2 bg-neutral-800"
+                className="w-full border rounded-md p-3 bg-neutral-800 text-white"
               >
                 {product.variants.map(v => (
                   <option key={v.sku} value={v.sku}>
@@ -94,8 +96,8 @@ export default function ProductDetail({ id }: { id: string }) {
             )}
 
             {/* Campo cantidad */}
-            <div className="flex items-center gap-2">
-              <label htmlFor="qty">Cantidad:</label>
+            <div className="flex items-center gap-3">
+              <label htmlFor="qty" className="text-sm text-white">Cantidad:</label>
               <input
                 id="qty"
                 type="number"
@@ -103,21 +105,22 @@ export default function ProductDetail({ id }: { id: string }) {
                 max={maxQty}
                 value={qty}
                 onChange={e => setQty(Math.min(maxQty, Math.max(1, +e.target.value)))}
-                className="w-20 p-2 text-center rounded border bg-neutral-800"
+                className="w-20 p-2 text-center rounded border bg-neutral-800 text-white"
               />
               <span className="text-sm text-muted-foreground">Stock: {maxQty}</span>
             </div>
 
-            <p className="text-3xl font-bold">
+            {/* Precio y promoción */}
+            <div className="text-3xl font-bold text-green-400">
               ${(variant.price * qty).toLocaleString('es-CO')}
-            </p>
+            </div>
 
             <div className="flex flex-col sm:flex-row gap-4">
               <Button
                 size="lg"
                 disabled={maxQty === 0}
-                className='cursor-pointer'
-                onClick={() => { handleAdd(); setOpen(true); }}
+                className="cursor-pointer shadow-md"
+                onClick={handleAdd}
               >
                 Agregar al carrito
               </Button>
@@ -126,8 +129,11 @@ export default function ProductDetail({ id }: { id: string }) {
                 size="lg"
                 variant="secondary"
                 disabled={maxQty === 0}
-                className='cursor-pointer'
-                onClick={() => { handleAdd(); router.push('/carro'); }}
+                className="cursor-pointer"
+                onClick={() => {
+                  handleAdd();
+                  router.push('/carro');
+                }}
               >
                 Comprar ahora
               </Button>
@@ -136,9 +142,41 @@ export default function ProductDetail({ id }: { id: string }) {
             {maxQty === 0 && <p className="text-red-500">Sin stock disponible</p>}
           </div>
         </div>
+
+        {/* ─ Recomendaciones ─ */}
+        <div className="mt-16">
+          <h2 className="text-2xl font-semibold mb-6 text-white">También te puede interesar</h2>
+          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-6">
+            {relatedProducts.map(p => {
+              const firstVariant = p.variants?.[0];
+              if (!firstVariant) return null;
+
+              return (
+                <div
+                  key={p.id}
+                  onClick={() => router.push(`/catalogo/${p.id}`)}
+                  className="bg-neutral-900 p-4 rounded-xl hover:scale-105 transition-transform duration-300 shadow-md cursor-pointer"
+                >
+                  <div className="relative aspect-square rounded-lg overflow-hidden bg-neutral-800">
+                    <Image
+                      src={p.image}
+                      alt={p.name}
+                      fill
+                      className="object-contain p-4"
+                    />
+                  </div>
+                  <h3 className="mt-3 text-sm font-medium text-white">{p.name}</h3>
+                  <p className="text-green-400 font-semibold">
+                    ${firstVariant.price.toLocaleString('es-CO')}
+                  </p>
+                </div>
+              );
+            })}
+          </div>
+        </div>
       </section>
 
-      {/* Diálogo confirmación */}
+      {/* ─ Diálogo de confirmación ─ */}
       <AlertDialogWrapper
         open={open}
         onOpenChange={setOpen}

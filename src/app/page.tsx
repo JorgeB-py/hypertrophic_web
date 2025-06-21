@@ -8,6 +8,8 @@ import { useRouter } from "next/navigation";
 import Divider from "@/components/shared/divider";
 import Destacados from "../components/shared/featured";
 import FadeInOnView from "@/components/shared/FadeInOnView";
+import { useProductStore } from "@/lib/productsStore";
+import { useEffect } from "react";
 
 export default function Home() {
   const router = useRouter();
@@ -16,6 +18,12 @@ export default function Home() {
     { image: "testimonio2.jpeg" },
     { image: "testimonio3.jpeg" },
   ];
+
+  const fetchProducts = useProductStore(s => s.fetchProducts);
+
+  useEffect(() => {
+    fetchProducts();
+  }, [fetchProducts]);
 
   const whatsappAPI = () => window.open("https://wa.me/573132496945");
   const catalogHandle = () => router.push("/catalogo");
@@ -71,6 +79,11 @@ export default function Home() {
         </section>
       </FadeInOnView>
 
+      {/* ───────────── DESTACADOS ───────────── */}
+      <FadeInOnView delay={0.4}>
+        <Destacados />
+      </FadeInOnView>
+
       {/* ──────────── FRASE + IMAGEN ──────────── */}
       <FadeInOnView delay={0.2}>
         <section className="relative isolate flex flex-col items-center gap-6 py-12">
@@ -91,11 +104,6 @@ export default function Home() {
           </div>
           <Divider />
         </section>
-      </FadeInOnView>
-
-      {/* ───────────── DESTACADOS ───────────── */}
-      <FadeInOnView delay={0.4}>
-        <Destacados />
       </FadeInOnView>
 
       {/* ───────────── CTA CATÁLOGO ───────────── */}

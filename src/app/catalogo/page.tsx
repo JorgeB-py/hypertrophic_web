@@ -1,40 +1,34 @@
-'use client';
-
+"use client"
 import { useState, useMemo, useEffect } from 'react';
 import Image from 'next/image';
-import { Product } from '@/interfaces/product';
-import { Card} from '@/components/ui/card';
+import { Card } from '@/components/ui/card';
 import { montserrat, roboto } from '@/fonts/fonts';
 import { useRouter } from 'next/navigation';
 import { Button } from '@/components/ui/button';
-import { getAllProductos } from '@/services/firebase.service';
+import { useProductStore } from '@/lib/productsStore';
 import { Input } from '@/components/ui/input';
 
 export default function Catalogo() {
   const router = useRouter();
-
-  const [products, setProducts] = useState<Product[]>([]);
   const [query, setQuery] = useState('');
   const [marca, setMarca] = useState('all');
   const [page, setPage] = useState(1);
   const perPage = 15;
 
-  /* ──────────────────── Firestore ──────────────────── */
-  useEffect(() => {
-    (async () => {
-      const productos = await getAllProductos();
-      setProducts(productos);
-    })();
-  }, []);
+  const { products, fetchProducts } = useProductStore();
 
-  /* ──────────────────── Memos ──────────────────── */
+  useEffect(() => {
+    if (!products) {
+      fetchProducts();
+    }
+  }, [products, fetchProducts]);
+
   const marcas = useMemo(
-    () => ['all', ...new Set(products.map(p => p.market ?? 'Sin marca'))],
+    () => ['all', ...new Set((products ?? []).map(p => p.market ?? 'Sin marca'))],
     [products]
   );
 
-  /* ──────────────────── Filtros y paginación ──────────────────── */
-  const visibles = products.filter(
+  const visibles = (products ?? []).filter(
     p =>
       (marca === 'all' || p.market === marca) &&
       p.name.toLowerCase().includes(query.toLowerCase())
@@ -45,31 +39,25 @@ export default function Catalogo() {
 
   useEffect(() => setPage(1), [marca, query]);
 
-  /* ──────────────────── Render ──────────────────── */
   return (
     <section className="p-6 text-white space-y-8 flex flex-col items-center justify-center">
-      <h2
-        className={`${montserrat.className} text-4xl font-extrabold text-center`}
-      >
+      <h2 className={`${montserrat.className} text-4xl font-extrabold text-center`}>
         Catálogo de productos
       </h2>
 
-      {/* ───────────── Filtros ───────────── */}
+      {/* Filtros */}
       <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
         <Input
           type="text"
           placeholder="Buscar producto…"
           value={query}
           onChange={e => setQuery(e.target.value)}
-          className="w-64 rounded-md bg-[#1a1a1a]/80 px-4 py-2 text-sm placeholder-gray-400
-                     focus:outline-none focus:ring-2 focus:ring-[#A40606]"
+          className="w-64 rounded-md bg-[#1a1a1a]/80 px-4 py-2 text-sm placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#A40606]"
         />
-
         <select
           value={marca}
           onChange={e => setMarca(e.target.value)}
-          className="w-56 rounded-md bg-[#1a1a1a]/80 px-4 py-2 text-sm
-                     focus:outline-none focus:ring-2 focus:ring-[#A40606]"
+          className="w-56 rounded-md bg-[#1a1a1a]/80 px-4 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#A40606]"
         >
           {marcas.map(m => (
             <option key={m} value={m} className="bg-[#1a1a1a]">
@@ -79,24 +67,16 @@ export default function Catalogo() {
         </select>
       </div>
 
-      {/* ───────────── Grid de productos ───────────── */}
+      {/* Grid de productos */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 xl:grid-cols-5 gap-8 justify-center">
         {pageProducts.map(p => (
           <Card
             key={p.id}
             role="button"
             tabIndex={0}
-            className="flex flex-col items-center justify-center
-             w-[200px] h-[300px]
-             bg-[linear-gradient(180deg,#a40606_60%,#1a1a1a)]
-             rounded-xl overflow-hidden
-             transition-all duration-300 cursor-pointer
-             hover:scale-105 hover:brightness-110
-             hover:shadow-[0_0_25px_#ff0000aa] hover:ring-2
-             hover:ring-[#ff4d4d] ring-offset-2"
+            className="flex flex-col items-center justify-center w-[200px] h-[300px] bg-[linear-gradient(180deg,#a40606_60%,#1a1a1a)] rounded-xl overflow-hidden transition-all duration-300 cursor-pointer hover:scale-105 hover:brightness-110 hover:shadow-[0_0_25px_#ff0000aa] hover:ring-2 hover:ring-[#ff4d4d] ring-offset-2"
             onClick={() => router.push(`catalogo/${p.id}`)}
           >
-            {/* Imagen */}
             <div className="flex justify-center items-center h-40">
               <Image
                 src={p.image}
@@ -106,25 +86,20 @@ export default function Catalogo() {
                 className="object-contain max-h-40"
               />
             </div>
-
-            {/* Nombre más centrado */}
             <h3 className={`${montserrat.className} font-semibold text-sm text-center`}>
               {p.name}
             </h3>
           </Card>
-
-
-
         ))}
 
-        {pageProducts.length === 0 && (
+        {pageProducts.length === 0 && products && (
           <p className={`${roboto.className} col-span-full text-center mt-6`}>
             No se encontraron productos.
           </p>
         )}
       </div>
 
-      {/* ───────────── Paginación ───────────── */}
+      {/* Paginación */}
       {totalPages > 1 && (
         <div className="flex justify-center items-center gap-2 my-6">
           <Button
@@ -135,11 +110,9 @@ export default function Catalogo() {
           >
             Anterior
           </Button>
-
           <span className="px-4 py-2 text-lg font-bold">
             Página {page} de {totalPages}
           </span>
-
           <Button
             variant="secondary"
             size="sm"

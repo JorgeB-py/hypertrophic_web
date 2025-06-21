@@ -12,5 +12,5 @@ export interface Variant{
   flavor: string,
   servings: number,
   price: number,
-  stock: number
+  stock: number,
 }

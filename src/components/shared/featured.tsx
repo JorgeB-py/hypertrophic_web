@@ -2,10 +2,8 @@
 import Image from "next/image";
 import { Card, CardContent, CardFooter } from "@/components/ui/card";
 import { montserrat } from "@/fonts/fonts";
-import { useEffect, useState } from "react";
-import { getAllProductos } from "@/services/firebase.service";
-import { Product } from "@/interfaces/product";
 import { useRouter } from "next/navigation";
+import { useProductStore } from "@/lib/productsStore";
 
 const destacadosKeys = [
   "Creatine platinum",   // platinum
@@ -18,14 +16,9 @@ const destacadosKeys = [
 
 export default function Destacados() {
   const router = useRouter();
-  const [products, setProducts] = useState<Product[] | undefined>();
 
-  useEffect(() => {
-    (async () => {
-      const productos = await getAllProductos();
-      setProducts(productos);
-    })();
-  }, []);
+  const {products}= useProductStore();
+
   const destacados = (products ?? []).filter(p =>
     destacadosKeys.includes(p.name)
   );
@@ -49,9 +42,26 @@ export default function Destacados() {
                 {/* Front */}
                 <div className="absolute inset-0 flex flex-col items-center justify-center p-4 [backface-visibility:hidden]">
                   <Image src={producto.image} alt={producto.name} width={140} height={140} className="object-contain max-h-35" />
-                  <CardFooter className="mt-2 text-center">
+                  <CardFooter className="mt-2 flex flex-col items-center text-center">
                     <h3 className={`${montserrat.className} font-semibold text-base`}>{producto.name}</h3>
+                    <div className="mt-1 text-sm">
+                      {producto.variants[0].price && producto.variants[0].price+15000 > producto.variants[0].price ? (
+                        <div>
+                          <span className="line-through text-gray-300 mr-2">
+                            ${(producto.variants[0].price+15000).toLocaleString('es-CO')}
+                          </span>
+                          <span className="text-green-400 font-bold">
+                            ${producto.variants[0].price.toLocaleString('es-CO')}
+                          </span>
+                        </div>
+                      ) : (
+                        <span className="text-white font-bold">
+                          ${producto.variants[0].price.toLocaleString('es-CO')}
+                        </span>
+                      )}
+                    </div>
                   </CardFooter>
+
                 </div>
                 {/* Back */}
                 <div className="absolute inset-0 flex flex-col p-4 bg-[linear-gradient(180deg,#a40606_60%,#1a1a1a)] rounded-xl [backface-visibility:hidden] [transform:rotateY(180deg)] text-center">
