@@ -4,6 +4,7 @@ export interface Product {
   image: string;
   description: string;
   market: string;
+  category: string;
   variants: Variant[]
 }
 

@@ -9,7 +9,8 @@ import Divider from "@/components/shared/divider";
 import Destacados from "../components/shared/featured";
 import FadeInOnView from "@/components/shared/FadeInOnView";
 import { useProductStore } from "@/lib/productsStore";
-import { useEffect } from "react";
+import { useEffect, useMemo } from "react";
+import { Card, CardContent, CardFooter } from "@/components/ui/card";
 
 export default function Home() {
   const router = useRouter();
@@ -20,6 +21,12 @@ export default function Home() {
   ];
 
   const fetchProducts = useProductStore(s => s.fetchProducts);
+  const products = useProductStore(s => s.products);
+
+  const combos = useMemo(() => {
+    if (!products) return [];
+    return products.filter(p => p.category === "combo");
+  }, [products]);
 
   useEffect(() => {
     fetchProducts();
@@ -80,12 +87,80 @@ export default function Home() {
       </FadeInOnView>
 
       {/* ───────────── DESTACADOS ───────────── */}
-      <FadeInOnView delay={0.4}>
+      <FadeInOnView delay={0.4} className="flex flex-col justify-center items-center">
         <Destacados />
+        <Divider />
       </FadeInOnView>
 
+
+      {combos.length > 0 && (
+        <FadeInOnView delay={0.25} className="flex flex-col items-center w-full px-4">
+          <section className="w-full max-w-6xl px-6 py-12 rounded-3xl shadow-lg">
+            <h2 className={`${montserrat.className} text-4xl font-extrabold text-center text-white mb-12`}>
+              🔥 Promociones Activas 🔥
+            </h2>
+
+            <div className={`flex justify-center ${combos.length === 1 ? "" : "flex-wrap"}`}>
+              <div className={`
+          ${combos.length === 1
+                  ? "flex justify-center"
+                  : "grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8"}
+        `}>
+                {combos.map(combo => (
+                  <Card
+                    onClick={() => router.push(`catalogo/${combo.id}`)}
+                    role="button"
+                    key={combo.id}
+                    className="group relative w-[280px] h-[360px] cursor-pointer rounded-2xl bg-[linear-gradient(180deg,#a40606_60%,#1a1a1a)] 
+    drop-shadow-[0_0_30px_rgba(255,0,0,0.6)] hover:scale-105 transition-transform duration-300 perspective-[1000px]"
+                  >
+                    <CardContent className="absolute inset-0 w-full h-full transition-transform duration-700 [transform-style:preserve-3d] group-hover:[transform:rotateY(180deg)]">
+                      {/* Front */}
+                      <div className="absolute inset-0 flex flex-col items-center justify-center p-4 [backface-visibility:hidden]">
+                        <Image
+                          src={combo.image}
+                          alt={combo.name}
+                          width={200}
+                          height={200}
+                          className="object-contain w-full h-[80%]"
+                        />
+                        <CardFooter className="mt-2 flex flex-col items-center text-center">
+                          <h3 className={`${montserrat.className} font-semibold text-base text-white`}>
+                            {combo.name}
+                          </h3>
+                          <div className="mt-1 text-sm">
+                            <span className="line-through text-gray-300 mr-2">
+                              ${(combo.variants[0].price + 59000).toLocaleString("es-CO")}
+                            </span>
+                            <span className="text-green-400 font-bold">
+                              ${combo.variants[0].price.toLocaleString("es-CO")}
+                            </span>
+                          </div>
+                        </CardFooter>
+                      </div>
+
+                      {/* Back */}
+                      <div className="absolute inset-0 flex flex-col p-4 bg-[linear-gradient(180deg,#a40606_60%,#1a1a1a)] rounded-xl 
+                  [backface-visibility:hidden] [transform:rotateY(180deg)] text-center">
+                        <p className="text-sm mb-3 line-clamp-4 text-white">{combo.description}</p>
+                        <Image src={combo.image} alt={combo.name} width={100} height={60} className="object-contain self-center mt-2 w-full h-[60%]" />
+                      </div>
+                    </CardContent>
+                  </Card>
+                ))}
+              </div>
+            </div>
+          </section>
+          <Divider />
+        </FadeInOnView>
+      )}
+
+
+
+
+
       {/* ──────────── FRASE + IMAGEN ──────────── */}
-      <FadeInOnView delay={0.2}>
+      {/**<FadeInOnView delay={0.2}>
         <section className="relative isolate flex flex-col items-center gap-6 py-12">
           <div className="absolute inset-0 -z-10" />
           <Image src="/ronnie.png" width={325} height={647} alt="Ronnie Coleman" />
@@ -94,7 +169,7 @@ export default function Home() {
           </h2>
           <Divider />
         </section>
-      </FadeInOnView>
+      </FadeInOnView>**/}
 
       {/* ───────────── TESTIMONIOS ───────────── */}
       <FadeInOnView delay={0.3}>

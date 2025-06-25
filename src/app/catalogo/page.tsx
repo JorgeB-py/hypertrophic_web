@@ -12,6 +12,7 @@ export default function Catalogo() {
   const router = useRouter();
   const [query, setQuery] = useState('');
   const [marca, setMarca] = useState('all');
+  const [category, setCategory] = useState('all');
   const [page, setPage] = useState(1);
   const perPage = 15;
 
@@ -28,11 +29,18 @@ export default function Catalogo() {
     [products]
   );
 
+  const categories = useMemo(
+    () => ['all', ...new Set((products ?? []).map(p => p.category ?? 'Sin categoría'))],
+    [products]
+  );
+
   const visibles = (products ?? []).filter(
     p =>
       (marca === 'all' || p.market === marca) &&
+      (category === 'all' || p.category === category) &&
       p.name.toLowerCase().includes(query.toLowerCase())
   );
+
 
   const totalPages = Math.ceil(visibles.length / perPage);
   const pageProducts = visibles.slice((page - 1) * perPage, page * perPage);
@@ -62,6 +70,17 @@ export default function Catalogo() {
           {marcas.map(m => (
             <option key={m} value={m} className="bg-[#1a1a1a]">
               {m === 'all' ? 'Todas las marcas' : m}
+            </option>
+          ))}
+        </select>
+        <select
+          value={category}
+          onChange={e => setCategory(e.target.value)}
+          className="w-56 rounded-md bg-[#1a1a1a]/80 px-4 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#A40606]"
+        >
+          {categories.map(c => (
+            <option key={c} value={c} className="bg-[#1a1a1a]">
+              {c === 'all' ? 'Todas las categorías' : c}
             </option>
           ))}
         </select>
