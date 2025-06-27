@@ -12,9 +12,11 @@ interface ProductState {
 export const useProductStore = create<ProductState>((set) => ({
   products: null,
   loading: false,
+  
   fetchProducts: async () => {
     set({ loading: true });
     const productos = await getAllProductos();
     set({ products: productos, loading: false });
+    
   },
 }));

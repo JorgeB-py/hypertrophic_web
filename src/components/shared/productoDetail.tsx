@@ -1,31 +1,36 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import Image from 'next/image';
 import { useCart } from '@/lib/cartStore';
 import { useRouter } from 'next/navigation';
 import { Button } from '@/components/ui/button';
 import AlertDialogWrapper from './alertdialog';
+import { Product } from '@/interfaces/product';
 import { useProductStore } from '@/lib/productsStore';
 
-export default function ProductDetail({ id }: { id: string }) {
-  const { products } = useProductStore();
-  const product = products?.find(p => p.id === id) ?? null;
+export default function ProductDetail({product}: {product: Product} ) {
   const [variant, setVariant] = useState(() => product?.variants?.[0] ?? null);
   const [qty, setQty] = useState(1);
   const [open, setOpen] = useState(false);
 
-  const relatedProducts = (products ?? []).filter(p => p.id !== product?.id).slice(0, 4);
+  const fetchProducts = useProductStore(s => s.fetchProducts);
+  const allProducts = useProductStore(s => s.products);
+
+   const relatedProducts = useMemo(() => {
+    if (!allProducts) return [];
+    return allProducts.filter(p => p.id !== product.id).slice(0, 4);
+  }, [allProducts, product.id]);
+
 
   const add = useCart(s => s.add);
   const router = useRouter();
-  const fetchProducts = useProductStore(s => s.fetchProducts);
 
   useEffect(() => {
-    if (!products) {
+    if (!relatedProducts) {
       fetchProducts();
     }
-  }, [products, fetchProducts]);
+  }, [relatedProducts, fetchProducts]);
 
   useEffect(() => {
     if (product && !variant) {
