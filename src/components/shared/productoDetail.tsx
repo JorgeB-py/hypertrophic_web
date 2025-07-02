@@ -14,13 +14,19 @@ export default function ProductDetail({product}: {product: Product} ) {
   const [qty, setQty] = useState(1);
   const [open, setOpen] = useState(false);
 
-  const fetchProducts = useProductStore(s => s.fetchProducts);
-  const allProducts = useProductStore(s => s.products);
+  const {products, fetchProducts} = useProductStore();
+  
+
+  useEffect(() => {
+    if (!products) {
+      fetchProducts();
+    }
+  }, [products, fetchProducts]);
 
    const relatedProducts = useMemo(() => {
-    if (!allProducts) return [];
-    return allProducts.filter(p => p.id !== product.id).slice(0, 4);
-  }, [allProducts, product.id]);
+    if (!products) return [];
+    return products.filter(p => p.id !== product.id).slice(0, 4);
+  }, [products, product.id]);
 
 
   const add = useCart(s => s.add);
@@ -55,6 +61,7 @@ export default function ProductDetail({product}: {product: Product} ) {
       price: variant.price,
       image: product.image,
       qty,
+      category: product.category
     });
     setOpen(true);
   };

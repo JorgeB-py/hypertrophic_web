@@ -9,7 +9,8 @@ export interface CartItem {
   name: string;
   price: number;
   image: string;
-  qty: number;          // 👈 cantidad en el carrito
+  qty: number;   
+  category: string; 
 }
 
 type CheckoutData = {

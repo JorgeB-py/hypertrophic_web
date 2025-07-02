@@ -39,10 +39,14 @@ export default function Cart() {
         type: '',
     });
 
+    const hayCombo = items.some(
+        i => i.category?.toLowerCase() === 'combo'
+    );
+
     const subtotal = totalPrice();
     const envioBase = 21000;
     const envioGratisMinimo = 300000;
-    const aplicaEnvioGratis = subtotal >= envioGratisMinimo;
+    const aplicaEnvioGratis = subtotal >= envioGratisMinimo || hayCombo;
     const envio = aplicaEnvioGratis ? 0 : envioBase;
     const total = subtotal + envio;
     const restante = Math.max(envioGratisMinimo - subtotal, 0);
