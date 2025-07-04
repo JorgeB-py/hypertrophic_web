@@ -1,5 +1,19 @@
 'use client';
-
+declare global {
+  interface Window {
+    /**
+     * fbq para Facebook Pixel.
+     * @param command Siempre 'track' en este caso.
+     * @param event Nombre del evento (p.ej. 'AddToCart').
+     * @param params Parámetros adicionales del evento.
+     */
+    fbq?: (
+      command: 'track',
+      event: string,
+      params?: Record<string, unknown>
+    ) => void;
+  }
+}
 import { useEffect, useMemo, useState } from 'react';
 import Image from 'next/image';
 import { useCart } from '@/lib/cartStore';
@@ -9,13 +23,13 @@ import AlertDialogWrapper from './alertdialog';
 import { Product } from '@/interfaces/product';
 import { useProductStore } from '@/lib/productsStore';
 
-export default function ProductDetail({product}: {product: Product} ) {
+export default function ProductDetail({ product }: { product: Product }) {
   const [variant, setVariant] = useState(() => product?.variants?.[0] ?? null);
   const [qty, setQty] = useState(1);
   const [open, setOpen] = useState(false);
 
-  const {products, fetchProducts} = useProductStore();
-  
+  const { products, fetchProducts } = useProductStore();
+
 
   useEffect(() => {
     if (!products) {
@@ -23,7 +37,7 @@ export default function ProductDetail({product}: {product: Product} ) {
     }
   }, [products, fetchProducts]);
 
-   const relatedProducts = useMemo(() => {
+  const relatedProducts = useMemo(() => {
     if (!products) return [];
     return products.filter(p => p.id !== product.id).slice(0, 4);
   }, [products, product.id]);
@@ -64,6 +78,16 @@ export default function ProductDetail({product}: {product: Product} ) {
       category: product.category
     });
     setOpen(true);
+    if (window.fbq) {
+      window.fbq('track', 'AddToCart', {
+        content_ids: [variant.sku],
+        content_name: product.name,
+        value: variant.price * qty,
+        currency: 'COP',
+        contents: [{ id: variant.sku, quantity: qty }],
+        num_items: qty
+      });
+    }
   };
 
   return (
