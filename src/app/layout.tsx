@@ -96,11 +96,11 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         />
       </head>
 
-      <body className="bg-[url('/fondo.png')] bg-cover bg-center">
+      <body className="flex flex-col min-h-screen bg-[url('/fondo.png')] bg-cover bg-center">
         <Header />
         <PixelTracker />
         <div className="h-[100px]" />
-        <main className="w-full max-w-7xl mx-auto px-2 sm:px-4 md:px-8 text-white overflow-x-hidden">
+        <main className="flex-grow w-full max-w-7xl mx-auto px-2 sm:px-4 md:px-8 text-white overflow-x-hidden">
           {children}
         </main>
         <Footer />
