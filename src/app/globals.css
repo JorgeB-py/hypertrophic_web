@@ -1,7 +1,7 @@
 @import "tailwindcss";
 @import "tw-animate-css";
 
-
+@custom-variant dark (&:is(.dark *));
 
 @theme inline {
   --color-background: var(--background);
@@ -124,7 +124,6 @@
 html {
   scroll-behavior: smooth;
 }
-
 
 @keyframes float {
   0%, 100% {

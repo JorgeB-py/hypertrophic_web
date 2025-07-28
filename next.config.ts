@@ -12,7 +12,7 @@ module.exports = {
         pathname: "/JorgeB-py/assets-hypertrophic/**",
       },
     ],
-    unoptimized: true,
+    unoptimized: false,
   },
 };
 

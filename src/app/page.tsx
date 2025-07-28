@@ -20,6 +20,9 @@ export default function Home() {
     { image: "testimonio1.jpeg" },
     { image: "testimonio2.jpeg" },
     { image: "testimonio3.jpeg" },
+    { image: "testimonio4.jpeg" },
+    { image: "testimonio5.jpeg" },
+    { image: "testimonio6.jpeg" },
   ];
 
   const fetchProducts = useProductStore(s => s.fetchProducts);
@@ -40,7 +43,6 @@ export default function Home() {
     fetchProducts();
   }, [fetchProducts]);
 
-  const whatsappAPI = () => window.open("https://wa.me/573132496945");
   const catalogHandle = () => router.push("/catalogo");
 
   return (
@@ -79,16 +81,6 @@ export default function Home() {
               >
                 MÁS ALLÁ DE LOS SUPLEMENTOS. MÁS ALLÁ DE LOS LÍMITES.
               </h2>
-
-              <Button
-                onClick={whatsappAPI}
-                className="bg-[#A40606] hover:bg-[#A40606]/80 w-60 h-12 rounded-3xl flex items-center cursor-pointer justify-center gap-3"
-              >
-                <Image src="/wpp.png" width={37} height={37} alt="WhatsApp" />
-                <span className={`${roboto.className} font-semibold text-white text-lg`}>
-                  Envíanos un mensaje
-                </span>
-              </Button>
             </div>
           </div>
         </section>

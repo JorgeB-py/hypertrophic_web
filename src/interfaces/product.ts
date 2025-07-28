@@ -14,4 +14,5 @@ export interface Variant{
   servings: number,
   price: number,
   stock: number,
+  weight:string
 }

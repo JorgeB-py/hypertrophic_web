@@ -114,7 +114,7 @@ export default function ProductDetail({ product }: { product: Product }) {
               {product.description}
             </p>
 
-            {/* Select sabor/tamaño */}
+            {/* Select sabor/tamaño con peso */}
             {product.variants?.length > 1 && (
               <select
                 value={variant.sku}
@@ -125,11 +125,12 @@ export default function ProductDetail({ product }: { product: Product }) {
               >
                 {product.variants.map(v => (
                   <option key={v.sku} value={v.sku}>
-                    {v.flavor} · {v.servings}{v.servings ? ' serv' : ''}
+                    {v.flavor} · {v.servings}{v.servings ? ' serv' : ''} · {v.weight ?? 'Peso no disponible'}
                   </option>
                 ))}
               </select>
             )}
+
 
             {/* Campo cantidad */}
             <div className="flex items-center gap-3">

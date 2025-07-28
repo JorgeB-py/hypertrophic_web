@@ -1,12 +1,11 @@
 "use client";
 import Image from "next/image";
 import { Menu } from "lucide-react";
-import * as DropdownMenu from "@radix-ui/react-dropdown-menu";
-import { roboto } from "@/fonts/fonts";
 import Link from "next/link";
 import CartIcon from "./carticon";
 import { useEffect, useState } from "react";
 import clsx from "clsx";
+import { roboto } from "@/fonts/fonts";
 
 export default function Header() {
   const [scrolled, setScrolled] = useState(false);
@@ -18,12 +17,17 @@ export default function Header() {
 
     const onScroll = () => {
       setScrolled(window.scrollY > 10);
-      setMenuOpen(false); // Cierra el menú al hacer scroll
+      setMenuOpen(false);
     };
 
     window.addEventListener("scroll", onScroll);
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
+
+  // Bloquea el scroll del body cuando el menú está abierto
+  useEffect(() => {
+    document.body.style.overflow = menuOpen ? "hidden" : "auto";
+  }, [menuOpen]);
 
   return (
     <header
@@ -33,58 +37,26 @@ export default function Header() {
       )}
     >
       <div className="flex justify-between items-center py-4 max-w-7xl mx-auto text-white">
-        <Link href={"/"}>
+        {/* Logo */}
+        <Link href="/">
           <Image
-            src={"/imagen_h_blanca.png"}
-            alt={"logo"}
+            src="/imagen_h_blanca.png"
+            alt="logo"
             width={90}
             height={90}
+            priority
           />
         </Link>
 
-        {/* Menú hamburguesa (móvil) */}
-        <DropdownMenu.Root open={menuOpen} onOpenChange={setMenuOpen}>
-          <DropdownMenu.Trigger className="lg:hidden p-2">
-            <Menu className="w-8 h-8" />
-          </DropdownMenu.Trigger>
+        {/* Botón hamburguesa (solo en móviles) */}
+        <button
+          onClick={() => setMenuOpen(true)}
+          className="lg:hidden p-2 text-white"
+        >
+          <Menu className="w-8 h-8" />
+        </button>
 
-          <DropdownMenu.Portal>
-            <DropdownMenu.Content
-              className="text-white rounded-md p-4 shadow-lg flex flex-col space-y-4 text-center bg-black"
-              sideOffset={5}
-            >
-              <DropdownMenu.Item onSelect={() => setMenuOpen(false)}>
-                <Link
-                  href="/nosotros"
-                  className="block px-4 py-2 hover:bg-gray-700 rounded"
-                >
-                  Nosotros
-                </Link>
-              </DropdownMenu.Item>
-              <DropdownMenu.Item onSelect={() => setMenuOpen(false)}>
-                <Link
-                  href="/catalogo"
-                  className="block px-4 py-2 hover:bg-gray-700 rounded"
-                >
-                  Catálogo
-                </Link>
-              </DropdownMenu.Item>
-              <DropdownMenu.Item onSelect={() => setMenuOpen(false)}>
-                <a
-                  href="https://wa.me/573132496945"
-                  className="block px-4 py-2 hover:bg-gray-700 rounded"
-                >
-                  Contáctanos
-                </a>
-              </DropdownMenu.Item>
-              <DropdownMenu.Item onSelect={() => setMenuOpen(false)}>
-                {mounted && <CartIcon />}
-              </DropdownMenu.Item>
-            </DropdownMenu.Content>
-          </DropdownMenu.Portal>
-        </DropdownMenu.Root>
-
-        {/* Menú de navegación (desktop) */}
+        {/* Navegación para escritorio */}
         <nav className="hidden lg:flex lg:justify-end lg:space-x-6">
           <Link
             className={`${roboto.className} p-4 hover:text-gray-400 text-2xl`}
@@ -101,11 +73,61 @@ export default function Header() {
           <a
             className={`${roboto.className} p-4 hover:text-gray-400 text-2xl`}
             href="https://wa.me/573132496945"
+            target="_blank"
+            rel="noopener noreferrer"
           >
             Contáctanos
           </a>
           {mounted && <CartIcon />}
         </nav>
+      </div>
+
+      {/* Sidebar móvil */}
+      <div
+        className={clsx(
+          "fixed inset-0 z-50 lg:hidden transition-transform duration-300",
+          menuOpen ? "translate-x-0" : "-translate-x-full"
+        )}
+      >
+        {/* Overlay */}
+        <div
+          className="absolute inset-0 bg-black/60 backdrop-blur-sm"
+          onClick={() => setMenuOpen(false)}
+        />
+
+        {/* Menú lateral */}
+        <div className="relative w-64 bg-black h-full p-6 flex flex-col space-y-6 text-white">
+          <button
+            className="text-white text-right self-end text-2xl"
+            onClick={() => setMenuOpen(false)}
+          >
+            ✕
+          </button>
+          <Link
+            href="/nosotros"
+            onClick={() => setMenuOpen(false)}
+            className="text-lg hover:text-gray-400"
+          >
+            Nosotros
+          </Link>
+          <Link
+            href="/catalogo"
+            onClick={() => setMenuOpen(false)}
+            className="text-lg hover:text-gray-400"
+          >
+            Catálogo
+          </Link>
+          <a
+            href="https://wa.me/573132496945"
+            onClick={() => setMenuOpen(false)}
+            className="text-lg hover:text-gray-400"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Contáctanos
+          </a>
+          {mounted && <CartIcon />}
+        </div>
       </div>
     </header>
   );

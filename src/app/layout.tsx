@@ -4,6 +4,9 @@ import Header from "@/components/shared/header";
 import Footer from "@/components/shared/footer";
 import Script from "next/script";
 import PixelTracker from "@/components/shared/PixelTracker";
+import { Analytics } from "@vercel/analytics/next"
+import Link from "next/link";
+import Image from "next/image";
 
 export const metadata: Metadata = {
   title: "Hypertrophic"
@@ -25,7 +28,6 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           strategy="afterInteractive"
         />
 
-        {/* Meta Pixel */}
         <Script
           id="meta-pixel"
           strategy="beforeInteractive"
@@ -96,13 +98,26 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         />
       </head>
 
-      <body className="flex flex-col min-h-screen bg-[url('/fondo.png')] bg-cover bg-center">
+      <body className="flex flex-col min-h-screen bg-[url('/fondo.webp')] bg-cover bg-center">
+        <Analytics />
         <Header />
         <PixelTracker />
         <div className="h-[100px]" />
         <main className="flex-grow w-full max-w-7xl mx-auto px-2 sm:px-4 md:px-8 text-white overflow-x-hidden">
           {children}
         </main>
+        <Link
+          href="https://wa.me/573132496945"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="fixed bottom-4 right-4 z-50"
+        >
+          <Image
+            src="/wpp.webp"
+            alt="WhatsApp"
+            className="w-12 h-12 drop-shadow-lg hover:scale-110 transition-transform"
+          />
+        </Link>
         <Footer />
       </body>
     </html>
