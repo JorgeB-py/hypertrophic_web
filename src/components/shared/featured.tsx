@@ -6,12 +6,12 @@ import { useRouter } from "next/navigation";
 import { useProductStore } from "@/lib/productsStore";
 
 const destacadosKeys = [
-  "Creatine platinum",   // platinum
+  "Creatine platinum",
   "Creastack",
-  "Whey Gold Nitro Tech", // gold nitrotech
+  "Whey Gold Nitro Tech",
   "Bipro classic",
   "Legacy",
-  "ISO 100",
+  "Gold Standard 100% Whey Protein",
 ];
 
 export default function Destacados() {
