@@ -22,6 +22,7 @@ import { Button } from '@/components/ui/button';
 import AlertDialogWrapper from './alertdialog';
 import { Product } from '@/interfaces/product';
 import { useProductStore } from '@/lib/productsStore';
+import GalleryCarousel from './galleryCarousel';
 
 export default function ProductDetail({ product }: { product: Product }) {
   const [variant, setVariant] = useState(() => product?.variants?.[0] ?? null);
@@ -95,16 +96,13 @@ export default function ProductDetail({ product }: { product: Product }) {
       <section className="max-w-5xl mx-auto p-6">
         <div className="flex flex-col md:flex-row gap-10">
           {/* ─ Imagen ─ */}
-          <div className="relative w-full md:w-[40%] aspect-[4/5] rounded-xl overflow-hidden bg-gradient-to-br from-neutral-800 to-neutral-900 shadow-lg">
-            <Image
-              src={product.image}
-              alt={product.name}
-              fill
-              sizes="(min-width: 768px) 40vw, 100vw"
-              className="object-contain p-6"
-              priority
-            />
-          </div>
+          <GalleryCarousel
+            images={[
+              { src: product.image, alt: product.name },
+              { src: product.table, alt: `Tabla nutricional de ${product.name}` }
+            ]}
+            aspect="aspect-[4/5]"
+          />
 
           {/* ─ Info ─ */}
           <div className="flex-1 space-y-6">

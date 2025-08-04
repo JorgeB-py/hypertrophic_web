@@ -30,6 +30,7 @@ export default function Header() {
   }, [menuOpen]);
 
   return (
+   <>
     <header
       className={clsx(
         "fixed top-0 left-0 w-full z-50 transition-all duration-500 ease-in-out px-4",
@@ -82,7 +83,8 @@ export default function Header() {
         </nav>
       </div>
 
-      {/* Sidebar móvil */}
+    </header>
+          {/* Sidebar móvil */}
       <div
         className={clsx(
           "fixed inset-0 z-50 lg:hidden transition-transform duration-300",
@@ -129,6 +131,6 @@ export default function Header() {
           {mounted && <CartIcon />}
         </div>
       </div>
-    </header>
+    </> 
   );
 }

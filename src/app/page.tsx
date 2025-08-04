@@ -3,7 +3,7 @@
 import Image from "next/image";
 import { koulen, montserrat, roboto } from "@/fonts/fonts";
 import { Button } from "@/components/ui/button";
-import CarouselTestimonials, { Testimonials } from "@/components/shared/testimonials";
+import GalleryCarousel from "@/components/shared/galleryCarousel";
 import { useRouter } from "next/navigation";
 import Divider from "@/components/shared/divider";
 import Destacados from "../components/shared/featured";
@@ -16,13 +16,14 @@ import Autoplay from "embla-carousel-autoplay";
 
 export default function Home() {
   const router = useRouter();
-  const testimonials: Testimonials[] = [
-    { image: "testimonio1.jpeg" },
-    { image: "testimonio2.jpeg" },
-    { image: "testimonio3.jpeg" },
-    { image: "testimonio4.jpeg" },
-    { image: "testimonio5.jpeg" },
-    { image: "testimonio6.jpeg" },
+  const url ="https://raw.githubusercontent.com/JorgeB-py/assets-hypertrophic/main/";
+  const testimonials= [
+    { src: `${url}testimonio1.jpeg`, alt:"test1" },
+    { src: `${url}testimonio2.jpeg`, alt:"test2" },
+    { src: `${url}testimonio3.jpeg`, alt:"test3" },
+    { src: `${url}testimonio4.jpeg`, alt:"test4" },
+    { src: `${url}testimonio5.jpeg`, alt:"test5" },
+    { src: `${url}testimonio6.jpeg`, alt:"test6" },
   ];
 
   const fetchProducts = useProductStore(s => s.fetchProducts);
@@ -206,7 +207,7 @@ export default function Home() {
       <FadeInOnView delay={0.3}>
         <section className="py-12 flex flex-col items-center gap-8">
           <div className="w-full max-w-md">
-            <CarouselTestimonials testimonials={testimonials} />
+            <GalleryCarousel images={testimonials} autoplayMs={2000}  />
           </div>
           <Divider />
         </section>

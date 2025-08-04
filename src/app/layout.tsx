@@ -115,7 +115,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           <Image
             src="/wpp.webp"
             alt="WhatsApp"
-            className="w-12 h-12 drop-shadow-lg hover:scale-110 transition-transform"
+            className=" drop-shadow-lg hover:scale-110 transition-transform"
+            width={50}
+            height={20}
           />
         </Link>
         <Footer />

@@ -8,6 +8,7 @@ import { Button } from '@/components/ui/button';
 import { useProductStore } from '@/lib/productsStore';
 import { Input } from '@/components/ui/input';
 import Head from 'next/head';
+import Loading from '../loading';
 
 export default function Catalogo() {
   const router = useRouter();
@@ -47,6 +48,10 @@ export default function Catalogo() {
   const pageProducts = visibles.slice((page - 1) * perPage, page * perPage);
 
   useEffect(() => setPage(1), [marca, query]);
+
+  if (!products) {
+    return <Loading />;
+  }
 
   return (
     <>
