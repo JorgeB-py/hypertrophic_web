@@ -152,6 +152,14 @@ html {
   50%      { text-shadow: 0 0 18px #ff8080, 0 0 30px #ff4040; }
 }
 
-.logo-loop {             /* clase solo para el h1 */
+.logo-loop {
   animation: pulse-glow 3s ease-in-out infinite;
+}
+
+@keyframes spin-slow {
+  0% { transform: rotate(0deg);}
+  100% { transform: rotate(360deg);}
+}
+.animate-spin-slow {
+  animation: spin-slow 2s linear infinite;
 }
