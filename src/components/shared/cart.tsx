@@ -159,9 +159,6 @@ export default function Cart() {
                             🚚 Te faltan ${restante.toLocaleString()} para tener envío gratis.
                         </p>
                     )}
-                    <p className="mt-2 text-sm text-green-400 text-center">
-                        🟢 ¿Es tu primera compra? Escríbenos por <a href="https://wa.me/573001112223" target="_blank" className="underline">WhatsApp</a> y te devolvemos el valor del envío.
-                    </p>
 
                     {/* Resumen precios */}
                     <div className="mt-6 bg-zinc-900 p-6 rounded-lg shadow-md space-y-4">
