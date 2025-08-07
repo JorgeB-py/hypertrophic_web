@@ -44,7 +44,7 @@ export default function Cart() {
     );
 
     const subtotal = totalPrice();
-    const envioBase = 21000;
+    const envioBase = 20000;
     const envioGratisMinimo = 300000;
     const aplicaEnvioGratis = subtotal >= envioGratisMinimo || hayCombo;
     const envio = aplicaEnvioGratis ? 0 : envioBase;

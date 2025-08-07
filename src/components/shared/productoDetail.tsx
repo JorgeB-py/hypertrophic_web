@@ -40,8 +40,19 @@ export default function ProductDetail({ product }: { product: Product }) {
 
   const relatedProducts = useMemo(() => {
     if (!products) return [];
-    return products.filter(p => p.id !== product.id).slice(0, 4);
-  }, [products, product.id]);
+    const byCategory = products.filter(
+      p => p.id !== product.id && p.category === product.category
+    );
+    if (byCategory.length >= 4) return byCategory.slice(0, 4);
+
+    const byBrand = products.filter(
+      p => p.id !== product.id &&
+        p.market === product.market &&
+        !byCategory.some(bc => bc.id === p.id)
+    );
+    return [...byCategory, ...byBrand].slice(0, 4);
+  }, [products, product]);
+
 
 
   const add = useCart(s => s.add);
