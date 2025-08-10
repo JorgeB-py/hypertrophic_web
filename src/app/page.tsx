@@ -12,8 +12,6 @@ import { useEffect, useMemo, useState } from "react";
 import { Card, CardContent, CardFooter } from "@/components/ui/card";
 import { Carousel, CarouselContent, CarouselItem } from "@/components/ui/carousel";
 import Autoplay from "embla-carousel-autoplay";
-import { AlertDialog, AlertDialogContent, AlertDialogTitle } from "@/components/ui/alert-dialog";
-import { VisuallyHidden } from "@radix-ui/react-visually-hidden";
 
 export default function Home() {
   const router = useRouter();
@@ -54,53 +52,6 @@ export default function Home() {
 
   return (
     <>
-      <AlertDialog open={openPromo} onOpenChange={setOpenPromo}>
-        <AlertDialogContent
-          className="max-w-xs sm:max-w-md p-2 bg-transparent shadow-none border-0 flex flex-col items-center justify-center"
-        >
-          <AlertDialogTitle asChild>
-            <VisuallyHidden>
-              Promoción especial: Creatina Platinum - Batalla de Boyacá
-            </VisuallyHidden>
-          </AlertDialogTitle>
-          <div
-            role="button"
-            tabIndex={0}
-            className="outline-none"
-            onClick={e => {
-              e.stopPropagation();
-              setOpenPromo(false);
-              router.push("/catalogo/pmhgKUJecjDjt354demB");
-            }}
-            onKeyDown={e => {
-              if (e.key === "Enter" || e.key === " ") {
-                setOpenPromo(false);
-                router.push("/catalogo/pmhgKUJecjDjt354demB");
-              }
-            }}
-          >
-            <Image
-              src="/promo.webp"
-              alt="Promo Batalla de Boyacá"
-              width={450}
-              height={450}
-              priority
-              className="rounded-2xl cursor-pointer"
-              draggable={false}
-            />
-          </div>
-          <Button
-            className="mt-2 w-full bg-neutral-800 text-white rounded-xl"
-            onClick={() => setOpenPromo(false)}
-            tabIndex={0}
-          >
-            Cerrar
-          </Button>
-          <div className="mt-2 w-full h-3" />
-        </AlertDialogContent>
-      </AlertDialog>
-
-
       <section className="pt-8 pb-12 space-y-24">
         {/* ───────────── HERO ───────────── */}
         <FadeInOnView delay={0.1}>
