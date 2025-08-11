@@ -26,12 +26,6 @@ export default function Home() {
     { src: `${url}testimonio6.jpeg`, alt: "test6" },
   ];
 
-  const [openPromo, setOpenPromo] = useState(false);
-
-  useEffect(() => {
-    setOpenPromo(true);
-  }, []);
-
   const fetchProducts = useProductStore(s => s.fetchProducts);
   const products = useProductStore(s => s.products);
 
