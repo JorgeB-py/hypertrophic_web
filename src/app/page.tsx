@@ -8,7 +8,7 @@ import Divider from "@/components/shared/divider";
 import Destacados from "../components/shared/featured";
 import FadeInOnView from "@/components/shared/FadeInOnView";
 import { useProductStore } from "@/lib/productsStore";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo } from "react";
 import { Card, CardContent, CardFooter } from "@/components/ui/card";
 import { Carousel, CarouselContent, CarouselItem } from "@/components/ui/carousel";
 import Autoplay from "embla-carousel-autoplay";

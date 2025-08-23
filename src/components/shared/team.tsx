@@ -7,7 +7,6 @@ import Divider from "./divider";
 export default function Team() {
   const equipo = [
     { src: "/jorge.png", name: "Jorge" },
-    { src: "/juan.png",  name: "Juan"  },
     { src: "/sebastian.png", name: "Sebastian" },
   ];
 
