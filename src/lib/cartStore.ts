@@ -33,6 +33,7 @@ type CheckoutData = {
 type CartState = {
   items: CartItem[];
   checkoutData: CheckoutData | null;
+  loading: boolean;
   /* recibe qty opcional */
   add: (item: Omit<CartItem, 'qty'> & { qty?: number }) => void;
   remove: (id: string) => void;
@@ -41,6 +42,7 @@ type CartState = {
   totalPrice: () => number;
   updateQuantity: (id: string, quantity: number) => void;
   setCheckoutData: (data: CheckoutData) => void;
+  setLoading: (value: boolean) => void;   // 👈 nuevo setter
 };
 
 /* ─── Store ─── */
@@ -50,12 +52,13 @@ export const useCart = create<CartState>()(
       (set, get) => ({
         items: [],
         checkoutData: null,
+        loading: false, // 👈 inicializado en false
 
         /* add ahora suma la cantidad que envíes */
         add: (item) =>
           set(state => {
             const idx = state.items.findIndex(i => i.id === item.id);
-            const addQty = item.qty ?? 1;            // por defecto 1
+            const addQty = item.qty ?? 1; // por defecto 1
 
             if (idx > -1) {
               state.items[idx].qty += addQty;
@@ -83,6 +86,8 @@ export const useCart = create<CartState>()(
           })),
 
         setCheckoutData: (data) => set({ checkoutData: data }),
+
+        setLoading: (value) => set({ loading: value }),
       }),
       { name: 'cart-storage' }
     ),

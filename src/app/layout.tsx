@@ -9,8 +9,58 @@ import Link from "next/link";
 import Image from "next/image";
 
 export const metadata: Metadata = {
-  title: "Hypertrophic"
+  title: "Hypertrophic – Suplementos Originales en Colombia",
+  description:
+    "Hypertrophic es tu tienda online de suplementos originales en Colombia. Proteínas, creatinas, pre-workouts y combos exclusivos con envío gratis. ¡Supera tus límites!",
+  keywords: [
+    "suplementos en Colombia",
+    "proteínas originales",
+    "creatina",
+    "pre-workout",
+    "gainer",
+    "suplementos Bogotá",
+    "comprar suplementos",
+  ],
+  authors: [{ name: "Hypertrophic" }],
+  creator: "Hypertrophic",
+  publisher: "Hypertrophic",
+  metadataBase: new URL("https://hypertrophic.com.co"),
+  openGraph: {
+    title: "Hypertrophic – Suplementos Originales en Colombia",
+    description:
+      "Compra suplementos 100% originales en Colombia. Proteínas, creatinas, pre-workouts y combos con envío gratis.",
+    url: "https://hypertrophic.com.co",
+    siteName: "Hypertrophic",
+    images: [
+      {
+        url: "https://raw.githubusercontent.com/JorgeB-py/assets-hypertrophic/main/combo2.png",
+        width: 1200,
+        height: 630,
+        alt: "Hypertrophic – Suplementos Colombia",
+      },
+    ],
+    locale: "es_CO",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    site: "@HypertrophicCo",
+    title: "Hypertrophic – Suplementos Originales en Colombia",
+    description:
+      "Proteínas, creatinas y pre-workouts originales en Colombia. Envíos gratis y combos especiales.",
+    images: [
+      "https://raw.githubusercontent.com/JorgeB-py/assets-hypertrophic/main/combo2.png",
+    ],
+  },
+  robots: {
+    index: true,
+    follow: true,
+  },
+  alternates: {
+    canonical: "https://hypertrophic.com.co",
+  },
 };
+
 
 export const viewport: Viewport = {
   width: "device-width",
@@ -54,46 +104,6 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <noscript
           dangerouslySetInnerHTML={{
             __html: `<img height="1" width="1" style="display:none" src="https://www.facebook.com/tr?id=716084394676003&ev=PageView&noscript=1" />`,
-          }}
-        />
-
-        {/* Structured Data - Organization */}
-        <Script
-          id="structured-org"
-          strategy="afterInteractive"
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{
-            __html: JSON.stringify({
-              "@context": "https://schema.org",
-              "@type": "Organization",
-              name: "Hypertrophic",
-              url: "https://hypertrophic.com.co",
-              logo: "https://hypertrophic.com.co/logo.jpg",
-              sameAs: [
-                "https://www.instagram.com/hypertrophic_supplements",
-                "https://www.facebook.com/hypertrophic"
-              ]
-            }),
-          }}
-        />
-
-        {/* Structured Data - WebSite */}
-        <Script
-          id="structured-web"
-          strategy="afterInteractive"
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{
-            __html: JSON.stringify({
-              "@context": "https://schema.org",
-              "@type": "WebSite",
-              name: "Hypertrophic",
-              url: "https://hypertrophic.com.co",
-              potentialAction: {
-                "@type": "SearchAction",
-                target: "https://hypertrophic.com.co/buscar?q={search_term_string}",
-                "query-input": "required name=search_term_string"
-              }
-            }),
           }}
         />
       </head>
