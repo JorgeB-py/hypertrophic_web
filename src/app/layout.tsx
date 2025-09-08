@@ -72,10 +72,11 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="es">
       <head>
-        {/* MercadoPago Script */}
         <Script
-          src="https://sdk.mercadopago.com/js/v2"
+          src="https://checkout.wompi.co/widget.js"
+          type="text/javascript"
           strategy="afterInteractive"
+          id="wompi-widget-script"
         />
 
         <Script

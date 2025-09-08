@@ -1,17 +1,4 @@
 'use client';
-declare global {
-    interface Window {
-        MercadoPago: new (
-            publicKey: string,
-            options?: { locale?: string }
-        ) => {
-            checkout: (options: {
-                preference: { id: string };
-                autoOpen?: boolean;
-            }) => void;
-        };
-    }
-}
 import { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -19,8 +6,10 @@ import { checkout } from '@/services/checkout.service';
 import { useCart } from '@/lib/cartStore';
 import { Trash } from 'lucide-react';
 import Image from 'next/image';
+import { Combobox } from './combobox';
 import AlertDialogWrapper from '@/components/shared/alertdialog';
 import Loading from '@/app/loading';
+import { useWompiCheckout } from '@/hooks/use-wompi-checkout';
 
 export default function Cart() {
   const { items, remove, totalPrice, updateQuantity, loading } = useCart();
@@ -31,10 +20,14 @@ export default function Cart() {
     name: '',
     address: '',
     email: '',
+    city: '',
+    region: '',
     phone: '',
     document: '',
     type: '',
   });
+
+  const wompiReady = useWompiCheckout();
 
   const hayCombo = items.some(i => i.category?.toLowerCase() === 'combo');
 
@@ -45,11 +38,6 @@ export default function Cart() {
   const envio = aplicaEnvioGratis ? 0 : envioBase;
   const total = subtotal + envio;
   const restante = Math.max(envioGratisMinimo - subtotal, 0);
-
-  // 🌀 Loading
-  if (loading) {
-    return <Loading />;
-  }
 
   return (
     <main className="max-w-4xl mx-auto px-6 py-10 text-white">
@@ -123,38 +111,60 @@ export default function Cart() {
                 placeholder="Nombre completo"
                 value={formData.name}
                 onChange={e => setFormData({ ...formData, name: e.target.value })}
-                className="col-span-1 md:col-span-2 bg-zinc-800 text-white border-zinc-700"
+                className="bg-zinc-800 text-white border-zinc-700"
               />
-              <Input
-                placeholder="Tipo de documento"
-                value={formData.type}
-                onChange={e => setFormData({ ...formData, type: e.target.value })}
-                className="col-span-1 md:col-span-2 bg-zinc-800 text-white border-zinc-700"
-              />
-              <Input
-                placeholder="Documento"
-                value={formData.document}
-                onChange={e => setFormData({ ...formData, document: e.target.value })}
-                className="col-span-1 md:col-span-2 bg-zinc-800 text-white border-zinc-700"
-              />
+              <div className="md:col-span-1">
+                <Combobox
+                  options={[
+                    { label: 'Cédula de Ciudadanía', value: 'CC' },
+                    { label: 'Cédula de Extranjería', value: 'CE' },
+                    { label: 'NIT', value: 'NIT' },
+                    { label: 'Tarjeta de Identidad', value: 'TI' },
+                    { label: 'Pasaporte', value: 'PA' },
+                    { label: 'Registro Civil', value: 'RC' },
+                  ]}
+                  placeholder="Tipo de documento"
+                  value={formData.type}
+                  onChange={value => setFormData({ ...formData, type: value })}
+                  className="bg-zinc-800 text-white border-zinc-700 w-full"
+                />
+              </div>
               <Input
                 placeholder="Correo electrónico"
                 type="email"
                 value={formData.email}
                 onChange={e => setFormData({ ...formData, email: e.target.value })}
-                className="col-span-1 md:col-span-2 bg-zinc-800 text-white border-zinc-700"
+                className="bg-zinc-800 text-white border-zinc-700"
+              />
+              <Input
+                placeholder="Documento"
+                value={formData.document}
+                onChange={e => setFormData({ ...formData, document: e.target.value })}
+                className="bg-zinc-800 text-white border-zinc-700"
               />
               <Input
                 placeholder="Dirección de envío"
                 value={formData.address}
                 onChange={e => setFormData({ ...formData, address: e.target.value })}
-                className="col-span-1 md:col-span-2 bg-zinc-800 text-white border-zinc-700"
+                className="md:col-span-2 bg-zinc-800 text-white border-zinc-700"
+              />
+              <Input
+                placeholder="Ciudad"
+                value={formData.city}
+                onChange={e => setFormData({ ...formData, city: e.target.value })}
+                className="bg-zinc-800 text-white border-zinc-700"
+              />
+              <Input
+                placeholder="Región"
+                value={formData.region}
+                onChange={e => setFormData({ ...formData, region: e.target.value })}
+                className="bg-zinc-800 text-white border-zinc-700"
               />
               <Input
                 placeholder="Teléfono"
                 value={formData.phone}
                 onChange={e => setFormData({ ...formData, phone: e.target.value })}
-                className="col-span-1 md:col-span-2 bg-zinc-800 text-white border-zinc-700"
+                className="md:col-span-2 bg-zinc-800 text-white border-zinc-700"
               />
             </div>
           </div>
@@ -202,7 +212,8 @@ export default function Cart() {
 
           {/* Botón checkout */}
           <Button
-            className="mt-6 w-full bg-red-600 hover:bg-red-700 text-white py-3 rounded-lg font-semibold"
+            className="mt-6 w-full bg-red-600 hover:bg-red-700 text-white py-3 rounded-lg font-semibold disabled:opacity-50"
+            disabled={!wompiReady}
             onClick={() => {
               const camposVacios = Object.entries(formData).filter(([, v]) => !v.trim());
               if (camposVacios.length > 0) {
@@ -216,7 +227,7 @@ export default function Cart() {
               checkout(items, formData, envio);
             }}
           >
-            Finalizar compra
+            {wompiReady ? 'Finalizar compra' : 'Cargando Wompi...'}
           </Button>
 
           {showAlert && (
