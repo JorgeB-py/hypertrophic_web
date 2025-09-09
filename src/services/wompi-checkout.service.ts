@@ -54,7 +54,7 @@ export async function wompiCheckout(
       currency: checkoutData.currency,
       amountInCents: checkoutData.amountInCents,
       reference: checkoutData.reference,
-      publicKey: process.env.NEXT_PUBLIC_WOMPI_PUBLIC_KEY!,
+      publicKey: process.env.NEXT_PUBLIC_WOMPI_PUBLIC_KEY,
       redirectUrl: checkoutData.redirectUrl,
 
       // Firma de integridad ✅
