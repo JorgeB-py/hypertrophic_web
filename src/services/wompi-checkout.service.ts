@@ -94,15 +94,12 @@ export async function wompiCheckout(
 
     checkout.open((result: any) => {
       useCart.getState().setLoading(false);
-      if (result?.status) {
-        const stored = localStorage.getItem(`order_${checkoutData.reference}`);
-        if (stored) {
-          const data = JSON.parse(stored);
-          data.status = result.status;
-          localStorage.setItem(`order_${checkoutData.reference}`, JSON.stringify(data));
-        }
+      if (result) {
+        console.log(result);
+        window.location.href = `confirmation/?reference=${checkoutData.reference}/?id=${result.transaction.id}`;
       }
     });
+
 
     return { success: true };
   } catch (error) {
