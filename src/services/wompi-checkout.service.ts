@@ -82,7 +82,7 @@ export async function wompiCheckout(
       },
     });
 
-    localStorage.setItem(`order_${checkoutData.reference}`, JSON.stringify({
+    localStorage.setItem(`${checkoutData.reference}`, JSON.stringify({
       items: checkoutData.items,
       amountInCents: checkoutData.amountInCents,
       shippingCost: checkoutData.shippingCost,

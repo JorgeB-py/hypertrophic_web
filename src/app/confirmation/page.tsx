@@ -26,7 +26,7 @@ export default function ConfirmationPage() {
           return;
         }
 
-        const localData = localStorage.getItem(`order_${reference}`);
+        const localData = localStorage.getItem(`${reference}`);
         if (!localData) {
           setError('Información del pedido no encontrada');
           return;
@@ -59,7 +59,7 @@ export default function ConfirmationPage() {
 
                 // Guardamos actualización en localStorage
                 localStorage.setItem(
-                  `order_${reference}`,
+                  `${reference}`,
                   JSON.stringify(orderInfo)
                 );
               }
