@@ -88,6 +88,7 @@ export async function wompiCheckout(
       shippingCost: checkoutData.shippingCost,
       customerInfo: checkoutData.customerInfo,
       status: 'PENDING',
+      currency: checkoutData.currency || "COP",
     }));
 
     useCart.getState().setLoading(true);

@@ -179,7 +179,10 @@ export default function ConfirmationPage() {
           <div className="flex justify-between items-center border-t border-zinc-700 pt-4">
             <span className="text-lg font-semibold text-red-400">Total</span>
             <span className="text-lg font-bold">
-              ${(orderData.amountInCents / 100).toLocaleString()} COP
+              {(orderData.amountInCents / 100).toLocaleString("es-CO", {
+                style: "currency",
+                currency: orderData.currency || "COP",
+              })}
             </span>
           </div>
         </div>
