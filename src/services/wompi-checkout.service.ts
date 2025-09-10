@@ -97,7 +97,7 @@ export async function wompiCheckout(
       useCart.getState().setLoading(false);
       if (result) {
         console.log(result);
-        window.location.href = `/confirmation?reference=${checkoutData.reference}&?id=${result.transaction.id}`;
+        window.location.href = `/confirmation?reference=${checkoutData.reference}&id=${result.transaction.id}`;
       }
     });
 
