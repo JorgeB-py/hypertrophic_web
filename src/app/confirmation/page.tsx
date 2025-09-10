@@ -85,14 +85,20 @@ export default function ConfirmationPage() {
 
   if (loading) return <Loading />;
 
-  if (error || !orderData) {
+  if (
+    error ||
+    !orderData ||
+    !orderData.customerInfo ||
+    !orderData.items ||
+    !orderData.amountInCents
+  ) {
     return (
       <div className="max-w-4xl mx-auto px-6 py-10 text-white text-center">
         <h1 className="text-3xl font-bold mb-6 text-red-500">Error</h1>
-        <p>{error || 'No se encontró la información del pedido'}</p>
+        <p>{error || "No se encontró la información del pedido"}</p>
         <Button
           className="mt-6 bg-red-600 hover:bg-red-700 text-white py-3 rounded-lg font-semibold"
-          onClick={() => router.push('/')}
+          onClick={() => router.push("/")}
         >
           Volver al inicio
         </Button>
