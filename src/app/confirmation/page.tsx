@@ -26,13 +26,15 @@ export default function ConfirmationPage() {
           return;
         }
 
-        const localData = localStorage.getItem(`${reference}`);
+        const localData = localStorage.getItem(reference);
         if (!localData) {
           setError('Información del pedido no encontrada');
           return;
         }
 
         let orderInfo = JSON.parse(localData);
+
+        console.log(orderInfo);
 
         // Si tenemos un id, intentamos consultar a Wompi
         if (transactionId) {
@@ -57,9 +59,11 @@ export default function ConfirmationPage() {
                   wompiTransactionId: transactionId,
                 };
 
+                console.log(orderInfo);
+
                 // Guardamos actualización en localStorage
                 localStorage.setItem(
-                  `${reference}`,
+                  reference,
                   JSON.stringify(orderInfo)
                 );
               }
