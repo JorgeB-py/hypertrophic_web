@@ -223,6 +223,11 @@ export default function Home() {
         {/* ───────────── TESTIMONIOS ───────────── */}
         <FadeInOnView delay={0.3}>
           <section className="py-12 flex flex-col items-center gap-8">
+            <h2
+              className={`${montserrat.className} text-center text-[clamp(1.5rem,4vw,2.5rem)] max-w-md font-extrabold`}
+            >
+              Testimonios
+            </h2>
             <div className="w-full max-w-md">
               <GalleryCarousel images={testimonials} autoplayMs={2000} />
             </div>

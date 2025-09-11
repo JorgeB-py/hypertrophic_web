@@ -8,9 +8,9 @@ import { useProductStore } from "@/lib/productsStore";
 const destacadosKeys = [
   "Creatine platinum",
   "Creastack",
-  "Whey Gold Nitro Tech",
-  "Bipro classic",
-  "Legacy",
+  "WHEY ELITE",
+  "Euphoriq",
+  "Bipro Classic",
   "Gold Standard 100% Whey Protein",
 ];
 
@@ -48,7 +48,7 @@ export default function Destacados() {
                       {producto.variants[0].price && producto.variants[0].price+15000 > producto.variants[0].price ? (
                         <div>
                           <span className="line-through text-gray-300 mr-2">
-                            ${producto.name==="Creatine platinum"?(producto.variants[0].price+45000).toLocaleString('es-CO'):(producto.variants[0].price+15000).toLocaleString('es-CO')}
+                            {(producto.variants[0].price+15000).toLocaleString('es-CO')}
                           </span>
                           <span className="text-green-400 font-bold">
                             ${producto.variants[0].price.toLocaleString('es-CO')}

@@ -31,9 +31,8 @@ export default function GalleryCarousel({
                 src={img.src}
                 alt={img.alt}
                 fill
-                className="object-contain rounded-2xl bg-black"
+                className="object-contain rounded-2xl"
                 priority={i === 0}
-                sizes="(min-width: 768px) 40vw, 100vw"
               />
             </div>
           </CarouselItem>
