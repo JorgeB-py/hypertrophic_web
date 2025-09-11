@@ -19,7 +19,6 @@ export function useWompiCheckout() {
     script.async = true;
 
     script.onload = () => {
-      console.log('Wompi widget cargado ✅');
       setReady(true);
     };
 

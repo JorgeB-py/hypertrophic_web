@@ -82,11 +82,11 @@ export async function wompiCheckout(
       },
     });
 
-    localStorage.setItem(`${checkoutData.reference}`, JSON.stringify({
+    sessionStorage.setItem(`${checkoutData.reference}`, JSON.stringify({
       items: checkoutData.items,
       amountInCents: checkoutData.amountInCents,
-      shippingCost: checkoutData.shippingCost,
-      customerInfo: checkoutData.customerInfo,
+      shippingCost: checkoutData.shipping,
+      customerInfo: checkoutData.customer,
       status: 'PENDING',
       currency: checkoutData.currency || "COP",
     }));
@@ -96,7 +96,6 @@ export async function wompiCheckout(
     checkout.open((result: any) => {
       useCart.getState().setLoading(false);
       if (result) {
-        console.log(result);
         window.location.href = `/confirmation?reference=${checkoutData.reference}&id=${result.transaction.id}`;
       }
     });

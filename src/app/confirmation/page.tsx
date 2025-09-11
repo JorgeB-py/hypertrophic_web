@@ -26,15 +26,13 @@ export default function ConfirmationPage() {
           return;
         }
 
-        const localData = localStorage.getItem(reference);
+        const localData = sessionStorage.getItem(reference);
         if (!localData) {
           setError('Información del pedido no encontrada');
           return;
         }
 
         let orderInfo = JSON.parse(localData);
-
-        console.log(orderInfo);
 
         // Si tenemos un id, intentamos consultar a Wompi
         if (transactionId) {
@@ -59,19 +57,17 @@ export default function ConfirmationPage() {
                   wompiTransactionId: transactionId,
                 };
 
-                console.log(orderInfo);
 
-                // Guardamos actualización en localStorage
-                localStorage.setItem(
+                sessionStorage.setItem(
                   reference,
                   JSON.stringify(orderInfo)
                 );
               }
             } else {
-              console.warn('No se pudo consultar Wompi, usando localStorage');
+              console.warn('No se pudo consultar Wompi, usando sessionStorage');
             }
           } catch (err) {
-            console.warn('Error consultando Wompi, usando localStorage:', err);
+            console.warn('Error consultando Wompi, usando sessionStorage:', err);
           }
         }
 
