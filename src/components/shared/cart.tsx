@@ -32,7 +32,7 @@ export default function Cart() {
   const hayCombo = items.some(i => i.category?.toLowerCase() === 'combo');
 
   const subtotal = totalPrice();
-  const envioBase = 0;
+  const envioBase = 15000;
   const envioGratisMinimo = 300000;
   const aplicaEnvioGratis = subtotal >= envioGratisMinimo || hayCombo;
   const envio = aplicaEnvioGratis ? 0 : envioBase;
