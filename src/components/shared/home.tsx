@@ -14,6 +14,7 @@ import { Carousel, CarouselContent, CarouselItem } from "@/components/ui/carouse
 import Autoplay from "embla-carousel-autoplay";
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle } from "../ui/alert-dialog";
 import { X } from "lucide-react";
+import Link from "next/link";
 
 export default function Home() {
   const router = useRouter();
@@ -66,13 +67,15 @@ export default function Home() {
               💘 Promoción Amor y Amistad 💘
             </AlertDialogTitle>
             <AlertDialogDescription className="flex justify-center mt-4 bg-white rounded-2xl shadow-lg p-4">
-              <Image
-                src={"/promo_amor_amistad.jpg"}
-                alt={"promo_amor_amistad"}
-                width={400}
-                height={550}
-                className="rounded-xl object-contain"
-              />
+              <Link href={"https://hypertrophic.com.co/catalogo/alaZjXFR0ftGPDj6xuWK"}>
+                <Image
+                  src={"/promo_amor_amistad.jpg"}
+                  alt={"promo_amor_amistad"}
+                  width={400}
+                  height={550}
+                  className="rounded-xl object-contain"
+                />
+              </Link>
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter className="flex justify-between gap-4 mt-6">
