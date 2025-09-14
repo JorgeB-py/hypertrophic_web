@@ -7,6 +7,7 @@ import {
   AlertDialogFooter,
   AlertDialogHeader,
   AlertDialogTitle,
+  AlertDialogCancel
 } from '@/components/ui/alert-dialog';
 
 interface Props {
@@ -15,6 +16,8 @@ interface Props {
   title: string;
   description: string;
   boton:string;
+  secondaryBoton?:string;
+  secondaryAction?: ()=> void;
   action: ()=> void;
 }
 
@@ -22,8 +25,10 @@ export default function AlertDialogWrapper({
   open,
   onOpenChange,
   title,
+  secondaryAction,
   description,
   boton,
+  secondaryBoton,
   action,
 }: Props) {
   return (
@@ -34,6 +39,9 @@ export default function AlertDialogWrapper({
           <AlertDialogDescription>{description}</AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>
+          <AlertDialogCancel onClick={secondaryAction} className='cursor-pointer'>
+            {secondaryBoton}
+          </AlertDialogCancel>
           <AlertDialogAction onClick={action} className='cursor-pointer'>
             {boton}
           </AlertDialogAction>

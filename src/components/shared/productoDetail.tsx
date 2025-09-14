@@ -289,8 +289,10 @@ export default function ProductDetail({ product }: { product: Product }) {
         onOpenChange={setOpen}
         title="Producto añadido"
         description={`${product.name} – ${variant.flavor} × ${qty} se agregó al carrito.`}
-        boton="Seguir comprando"
-        action={() => router.push('/catalogo')}
+        boton="Ir al carrito"
+        action={() => router.push("/carro")}
+        secondaryBoton='Seguir comprando'
+        secondaryAction={()=>router.push("/catalogo")}
       />
     </>
   );
