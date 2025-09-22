@@ -2,10 +2,10 @@ import { NextResponse } from "next/server";
 
 export async function GET(
   req: Request,
-  { params }: { params: { code: string } }
+  context: any
 ) {
   try {
-    const {code} = await params;
+    const { code } = context.params;
     const apiUrl = `${process.env.NEXT_PRIVATE_API}/get-coupon/${code}`;
 
     const response = await fetch(apiUrl);
