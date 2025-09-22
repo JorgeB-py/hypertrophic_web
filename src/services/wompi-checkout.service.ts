@@ -25,7 +25,7 @@ export async function wompiCheckout(
     useCart.getState().setLoading(true);
 
     const response = await fetch(
-      'https://wompiapi-isu2ps4vbq-uc.a.run.app/create-transaction',
+      "api/create-transaction",
       {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },

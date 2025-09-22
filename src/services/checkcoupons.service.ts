@@ -2,7 +2,7 @@ import { Coupon } from "@/interfaces/coupon";
 
 export async function checkForCoupons(coupon: string) {
     try {
-        const response = await fetch(`https://wompiapi-isu2ps4vbq-uc.a.run.app/get-coupon/${coupon}`);
+        const response = await fetch(`/api/coupon/${coupon}`);
 
         if (response.ok) {
             const data: Coupon = await response.json();

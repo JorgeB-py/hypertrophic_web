@@ -66,6 +66,7 @@ export default function Cart() {
       setDiscount(discountValue);
 
       setAlertMessage(`Cupón ${data.code} aplicado 🎉`);
+      setTitle("Cupón aplicado!")
       setShowAlert(true);
     } catch (error) {
       console.error(error);
