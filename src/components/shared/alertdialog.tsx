@@ -15,10 +15,10 @@ interface Props {
   onOpenChange: (v: boolean) => void;
   title: string;
   description: string;
-  boton:string;
-  secondaryBoton?:string;
-  secondaryAction?: ()=> void;
-  action: ()=> void;
+  boton: string;
+  secondaryBoton?: string;
+  secondaryAction?: () => void;
+  action: () => void;
 }
 
 export default function AlertDialogWrapper({
@@ -39,9 +39,10 @@ export default function AlertDialogWrapper({
           <AlertDialogDescription>{description}</AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>
-          <AlertDialogCancel onClick={secondaryAction} className='cursor-pointer'>
+          {secondaryBoton && <AlertDialogCancel onClick={secondaryAction} className='cursor-pointer'>
             {secondaryBoton}
-          </AlertDialogCancel>
+          </AlertDialogCancel>}
+
           <AlertDialogAction onClick={action} className='cursor-pointer'>
             {boton}
           </AlertDialogAction>

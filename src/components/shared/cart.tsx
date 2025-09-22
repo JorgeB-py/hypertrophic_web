@@ -8,13 +8,15 @@ import { Trash } from 'lucide-react';
 import Image from 'next/image';
 import { Combobox } from './combobox';
 import AlertDialogWrapper from '@/components/shared/alertdialog';
-import Loading from '@/app/loading';
 import { useWompiCheckout } from '@/hooks/use-wompi-checkout';
+import { checkForCoupons } from '@/services/checkcoupons.service';
+import { Coupon } from '@/interfaces/coupon';
 
 export default function Cart() {
   const { items, remove, totalPrice, updateQuantity, loading } = useCart();
   const [showAlert, setShowAlert] = useState(false);
   const [alertMessage, setAlertMessage] = useState('');
+  const [title, setTitle] = useState('');
 
   const [formData, setFormData] = useState({
     name: '',
@@ -27,6 +29,53 @@ export default function Cart() {
     type: '',
   });
 
+  const [coupon, setCoupon] = useState("");
+  const [appliedCoupon, setAppliedCoupon] = useState<Coupon | null>(null);
+  const [discount, setDiscount] = useState(0);
+
+  const handleCoupon = async () => {
+    try {
+      if (coupon.length==0){
+        
+        setAlertMessage("El cupón no es válido o está inactivo 🚫");
+        setShowAlert(true);
+        setAppliedCoupon(null);
+        setDiscount(0);
+        setTitle("Cupon no válido");
+
+      }
+      const data = await checkForCoupons(coupon);
+
+      if (!data || data.status !== "ACTIVE") {
+        setAlertMessage("El cupón no es válido o está inactivo 🚫");
+        setShowAlert(true);
+        setAppliedCoupon(null);
+        setDiscount(0);
+        setTitle("Cupon no válido");
+        return;
+      }
+
+      let discountValue = 0;
+      if (data.discount_type === "PERCENT") {
+        discountValue = (subtotal * Number(data.discount_value)) / 100;
+      } else if (data.discount_type === "AMOUNT") {
+        discountValue = Number(data.discount_value);
+      }
+
+      setAppliedCoupon(data);
+      setDiscount(discountValue);
+
+      setAlertMessage(`Cupón ${data.code} aplicado 🎉`);
+      setShowAlert(true);
+    } catch (error) {
+      console.error(error);
+      setAlertMessage("Error al validar el cupón ❌");
+      setTitle("Cupon no válido");
+      setShowAlert(true);
+    }
+  };
+
+
   const wompiReady = useWompiCheckout();
 
   const hayCombo = items.some(i => i.category?.toLowerCase() === 'combo');
@@ -36,7 +85,7 @@ export default function Cart() {
   const envioGratisMinimo = 300000;
   const aplicaEnvioGratis = subtotal >= envioGratisMinimo || hayCombo;
   const envio = aplicaEnvioGratis ? 0 : envioBase;
-  const total = subtotal + envio;
+  const total = Math.max(subtotal - discount, 0) + envio;
   const restante = Math.max(envioGratisMinimo - subtotal, 0);
 
   return (
@@ -178,6 +227,23 @@ export default function Cart() {
 
           {/* Resumen */}
           <div className="mt-6 bg-zinc-900 p-6 rounded-lg shadow-md space-y-4">
+            <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-3">
+              <span className="text-lg">Cupón:</span>
+              <Input
+                type="text"
+                className="w-full md:w-3/5"
+                value={coupon}
+                onChange={e => setCoupon(e.target.value)}
+              />
+              <Button
+                className="bg-red-600 hover:bg-red-700 text-white py-3 rounded-lg font-semibold disabled:opacity-50"
+                onClick={handleCoupon}
+              >
+                Aplicar descuento
+              </Button>
+            </div>
+          </div>
+          <div className="mt-6 bg-zinc-900 p-6 rounded-lg shadow-md space-y-4">
             <div className="flex justify-between">
               <span className="text-lg">Subtotal</span>
               <span className="text-lg font-semibold text-white">
@@ -185,12 +251,22 @@ export default function Cart() {
               </span>
             </div>
 
+            {appliedCoupon && (
+              <div className="flex justify-between">
+                <span className="text-lg text-green-400">
+                  Cupón ({appliedCoupon.code})
+                </span>
+                <span className="text-lg font-semibold text-green-400">
+                  -${discount.toLocaleString()}
+                </span>
+              </div>
+            )}
+
             <div className="flex justify-between">
               <span className="text-lg">Envío</span>
               <span
-                className={`text-lg font-semibold ${
-                  aplicaEnvioGratis ? 'text-green-400 line-through' : 'text-white'
-                }`}
+                className={`text-lg font-semibold ${aplicaEnvioGratis ? 'text-green-400 line-through' : 'text-white'
+                  }`}
               >
                 ${envioBase.toLocaleString()}
               </span>
@@ -221,6 +297,7 @@ export default function Cart() {
                   'Por favor completa todos los campos antes de continuar con el pago.'
                 );
                 setShowAlert(true);
+                setTitle("Error");
                 return;
               }
 
@@ -234,7 +311,7 @@ export default function Cart() {
             <AlertDialogWrapper
               open={showAlert}
               onOpenChange={setShowAlert}
-              title="Campos incompletos"
+              title={title}
               description={alertMessage}
               boton="Entendido"
               action={() => setShowAlert(false)}
