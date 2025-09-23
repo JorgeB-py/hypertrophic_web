@@ -109,7 +109,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         />
       </head>
 
-      <body className="flex flex-col min-h-screen bg-[url('/fondo.webp')] bg-cover bg-center">
+      <body className="flex flex-col min-h-screen bg-[url('/fondo.webp')] bg-cover bg-center bg-fixed">
         <Analytics />
         <Header />
         <PixelTracker />
