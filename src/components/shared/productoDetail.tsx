@@ -112,11 +112,10 @@ export default function ProductDetail({ product }: { product: Product }) {
                 <button
                   key={idx}
                   onClick={() => setActiveIndex(idx)}
-                  className={`relative w-20 h-20 rounded-lg overflow-hidden border ${
-                    activeIndex === idx
+                  className={`relative w-20 h-20 rounded-lg overflow-hidden border ${activeIndex === idx
                       ? 'border-green-500'
                       : 'border-gray-700'
-                  }`}
+                    }`}
                 >
                   <Image
                     src={img.src}
@@ -151,23 +150,21 @@ export default function ProductDetail({ product }: { product: Product }) {
 
               {/* Selectores de variantes */}
               {product.variants?.length > 0 && (
-                <div className="space-y-2 max-h-48 overflow-y-auto pr-2">
+                <div className="space-y-2 max-h-48 overflow-y-auto overflow-x-hidden pr-2">
                   <label className="block text-sm text-gray-300 font-medium">
                     Selecciona variante:
                   </label>
-                  <div className="flex flex-wrap gap-3">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 w-full">
                     {visibleVariants.map(v => (
                       <Button
                         key={v.sku}
                         onClick={() => setVariant(v)}
-                        className={`px-4 py-2 rounded-xl border text-sm ${
-                          variant.sku === v.sku
+                        className={`px-3 py-2 rounded-xl border text-xs max-w-full flex-1 ${variant.sku === v.sku
                             ? 'bg-green-600 text-white border-green-500'
                             : 'bg-neutral-800 text-gray-200 border-gray-600 hover:bg-neutral-700'
-                        }`}
+                          }`}
                       >
-                        {v.flavor} · {v.servings || '--'} serv ·{' '}
-                        {v.weight || 'Peso ND'}
+                        {v.flavor} · {v.weight || 'Peso ND'}
                       </Button>
                     ))}
                   </div>
@@ -292,7 +289,7 @@ export default function ProductDetail({ product }: { product: Product }) {
         boton="Ir al carrito"
         action={() => router.push("/carro")}
         secondaryBoton='Seguir comprando'
-        secondaryAction={()=>router.push("/catalogo")}
+        secondaryAction={() => router.push("/catalogo")}
       />
     </>
   );
