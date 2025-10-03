@@ -12,9 +12,6 @@ import { useEffect, useMemo, useState } from "react";
 import { Card, CardContent, CardFooter } from "@/components/ui/card";
 import { Carousel, CarouselContent, CarouselItem } from "@/components/ui/carousel";
 import Autoplay from "embla-carousel-autoplay";
-import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle } from "../ui/alert-dialog";
-import { X } from "lucide-react";
-import Link from "next/link";
 
 export default function Home() {
   const router = useRouter();
@@ -54,42 +51,6 @@ export default function Home() {
 
   return (
     <>
-      <AlertDialog open={open}>
-        <AlertDialogContent className="bg-gradient-to-br from-pink-100 via-red-100 to-pink-200 rounded-3xl shadow-2xl p-6 animate-in zoom-in-95 fade-in duration-300">
-          <AlertDialogCancel
-            onClick={() => setOpen(false)}
-            className="absolute top-2 right-2 rounded-full bg-white shadow-md text-gray-600 hover:text-red-600 hover:bg-red-100 transition-all"
-          >
-            <X className="w-5 h-5" />
-          </AlertDialogCancel>
-          <AlertDialogHeader className="flex flex-col items-center">
-            <AlertDialogTitle className="text-2xl font-bold text-red-600 tracking-wide">
-              💘 Promoción Amor y Amistad 💘
-            </AlertDialogTitle>
-            <AlertDialogDescription className="flex justify-center mt-4 bg-white rounded-2xl shadow-lg p-4">
-              <Link href={"https://hypertrophic.com.co/catalogo/alaZjXFR0ftGPDj6xuWK"}>
-                <Image
-                  src={"/promo_amor_amistad.jpg"}
-                  alt={"promo_amor_amistad"}
-                  width={400}
-                  height={550}
-                  className="rounded-xl object-contain"
-                />
-              </Link>
-            </AlertDialogDescription>
-          </AlertDialogHeader>
-          <AlertDialogFooter className="flex justify-between gap-4 mt-6">
-            <AlertDialogAction
-              className="rounded-xl bg-green-600 hover:bg-green-500 px-4 py-2 text-white font-semibold flex items-center gap-2 transition-all"
-              onClick={() => router.push("https://wa.link/g3wheg")}
-            >
-              💬 Ir a WhatsApp
-            </AlertDialogAction>
-          </AlertDialogFooter>
-        </AlertDialogContent>
-      </AlertDialog>
-
-
       <section className="pt-8 pb-12 space-y-24">
         {/* ───────────── HERO ───────────── */}
         <FadeInOnView delay={0.1}>
